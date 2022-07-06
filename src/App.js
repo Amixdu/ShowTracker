@@ -5,6 +5,8 @@ import Login from './Login';
 import Home from './Home';
 import MainPage from './MainPage';
 import Signup from './Signup';
+import { Container } from 'react-bootstrap'
+
 
 function App() {
 
@@ -37,7 +39,12 @@ function App() {
           </Route>
 
           <Route path="/signup">
-            <Signup />
+            <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh "}}>
+              <div className='w-100' style={{ maxWidth: '400px' }}>
+                <Signup />
+              </div>
+            </Container>
+            
           </Route>
 
           <Route path="/home">

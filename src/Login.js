@@ -3,7 +3,7 @@ import React from 'react'
 export default function Login() {
 
   const handleSubmit = (e) => {
-    console.log('Handle')
+    console.log()
     e.preventDefault()
   }
 
