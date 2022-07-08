@@ -35,21 +35,20 @@ function App() {
             <MainPage />
           </Route>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+          <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh "}}>
+            <div className='w-100' style={{ maxWidth: '400px' }}>
 
-          <Route path="/signup">
-            {/* <AuthProvider> */}
-              <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh "}}>
-              <div className='w-100' style={{ maxWidth: '400px' }}>
+              <Route path="/login">
+                <Login />
+              </Route>
+
+              <Route path="/signup">
                 <Signup />
-              </div>
-            </Container>
-            {/* </AuthProvider> */}
-            
-            
-          </Route>
+              </Route>
+              
+            </div>
+          </Container>
+          
 
           <Route path="/home">
             <Home />

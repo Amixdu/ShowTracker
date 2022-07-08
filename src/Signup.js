@@ -1,6 +1,8 @@
 import { Alert } from 'react-bootstrap'
 import React, { useRef, useState } from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+
 
 // import { useAuth } from './contexts/AuthContext'
 import { auth } from "./firebase"
@@ -35,9 +37,10 @@ export default function Signup() {
     try{
       const user = await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
       setCurrentU(user)
+      console.log(user)
     }
     catch(error){
-      console.log(error.message)
+      setError("Please ensure the entered Email is valid")
     }
 
     setLoading(false)
@@ -51,7 +54,7 @@ export default function Signup() {
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Signup Page</h2>
-          {JSON.stringify(currentU)}
+          {/* {auth.currentUser.email} */}
           {error && <Alert variant='danger'>{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
@@ -82,7 +85,7 @@ export default function Signup() {
       </Card>
       
       <div className="w-100 text-center mt-2">
-        Already have an account?
+        Already have an account? <Link to="/login"> Login </Link>
       </div>
       
     </div>
