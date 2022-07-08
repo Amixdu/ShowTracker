@@ -1,20 +1,43 @@
 import React, { useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Form, Button, Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
+import { useAuth } from './contexts/AuthContext'
+// import { auth } from "./firebase"
+// import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 export default function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const history = useHistory()
 
-  const handleSubmit = (e) => {
-    console.log()
+  const { login } = useAuth()
+
+  async function handleSubmit(e){
     e.preventDefault()
+    setError('')
+
+    // If checks passed, signup
+
+    try{
+      setLoading(true)
+      await login(emailRef.current.value, passwordRef.current.value)
+      console.log("Success")
+      setSuccess(true)
+      history.push("/")
+    }
+    catch(error){
+      console.log(error)
+      setSuccess(false)
+      setError("Login Failed")
+    }
+
+    setLoading(false)
   }
 
   return (
@@ -24,7 +47,7 @@ export default function Login() {
         <Card.Body>
           <h2 className="text-center mb-4">Login Page</h2>
           {/* {auth.currentUser.email} */}
-          {error && <Alert variant='danger'>{error}</Alert>}
+          {success? <Alert>Sucess</Alert> : error && <Alert variant='danger'>{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
 
@@ -38,15 +61,10 @@ export default function Login() {
               <Form.Control type="password" ref={passwordRef} required></Form.Control>
             </Form.Group>
 
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required></Form.Control>
-            </Form.Group>
-
             <br></br>
 
             <Button disbaled={loading} className='w-100' type="submit">
-              Sign up
+              Login
             </Button>
 
           </Form>

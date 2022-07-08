@@ -1,38 +1,47 @@
-// import React, { useContext, useEffect, useState } from 'react'
-// import { auth } from "../firebase"
+import React, { useContext, useEffect, useState } from 'react'
 
-// const AuthContext = React.createContext()
+import { auth } from "../firebase"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
-// // The exported function to obtain singup and currentUser to be used in other components
-// export function useAuth() {
-//   return useContext(AuthContext)
-// }
+const AuthContext = React.createContext()
 
-// export default function AuthProvider({ children }) {
-//   const [currentUser, setCurrentUser] = useState()
+// The exported function to obtain singup and currentUser to be used in other components
+export function useAuth() {
+  return useContext(AuthContext)
+}
+
+export default function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState()
+  const [loading, setLoading] = useState(true)
   
-//   function signup(email, password){
-//     return auth.createUserWithEmailAndPassword(email, password)
-//   }
+  function signup(email, password){
+    return createUserWithEmailAndPassword(auth, email, password)
+  }
 
-//   useEffect(() => {
+  function login(email, password){
+    return signInWithEmailAndPassword(auth, email, password)
+  }
 
-//     const unsubscribe = auth.onAuthStateChanged(user => {
-//       setCurrentUser(user)
-//     })
+  useEffect(() => {
 
-//     return unsubscribe
-//   }, [])
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user)
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [])
   
 
-//   const value = {
-//     currentUser,
-//     signup
-//   }
+  const value = {
+    currentUser,
+    signup,
+    login
+  }
 
-//   return (
-//     <AuthContext.Provider value={value}>
-//         {children}
-//     </AuthContext.Provider>
-//   )
-// }
+  return (
+    <AuthContext.Provider value={value}>
+        {!loading && children}
+    </AuthContext.Provider>
+  )
+}

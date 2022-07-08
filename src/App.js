@@ -6,7 +6,7 @@ import Home from './Home';
 import MainPage from './MainPage';
 import Signup from './Signup';
 import { Container } from 'react-bootstrap'
-// import AuthProvider from './contexts/AuthContext';
+import AuthProvider from './contexts/AuthContext';
 
 
 function App() {
@@ -25,38 +25,40 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <AuthProvider>
+        <div className="App">
 
-        {/* Enter Nav Bar outside of Switch */}
+          {/* Enter Nav Bar outside of Switch */}
 
-        <Switch>
+          <Switch>
 
-          <Route exact path="/">
-            <MainPage />
-          </Route>
+            <Route exact path="/">
+              <MainPage />
+            </Route>
 
-          <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh "}}>
-            <div className='w-100' style={{ maxWidth: '400px' }}>
+            <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh "}}>
+              <div className='w-100' style={{ maxWidth: '400px' }}>
 
-              <Route path="/login">
-                <Login />
-              </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
 
-              <Route path="/signup">
-                <Signup />
-              </Route>
-              
-            </div>
-          </Container>
-          
+                <Route path="/signup">
+                  <Signup />
+                </Route>
 
-          <Route path="/home">
-            <Home />
-          </Route>
+              </div>
+            </Container>
+            
 
-        </Switch>
+            <Route path="/home">
+              <Home />
+            </Route>
 
-      </div>
+          </Switch>
+
+        </div>
+      </AuthProvider>
     </Router>
     
   );

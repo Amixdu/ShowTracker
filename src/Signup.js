@@ -1,12 +1,12 @@
 import { Alert } from 'react-bootstrap'
 import React, { useRef, useState } from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 
-// import { useAuth } from './contexts/AuthContext'
-import { auth } from "./firebase"
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from './contexts/AuthContext'
+// import { auth } from "./firebase"
+// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 export default function Signup() {
@@ -15,8 +15,9 @@ export default function Signup() {
   const passwordConfirmRef = useRef()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const history = useHistory()
 
-  // const { signup } = useAuth()
+  const { signup, currentUser } = useAuth()
   const [currentU, setCurrentU] = useState()
 
   
@@ -35,9 +36,11 @@ export default function Signup() {
     // If checks passed, signup
 
     try{
-      const user = await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
-      setCurrentU(user)
-      console.log(user)
+      setLoading(true)
+      await signup(emailRef.current.value, passwordRef.current.value)
+      // setCurrentU(user)
+      console.log('Success')
+      history.push("/")
     }
     catch(error){
       setError("Please ensure the entered Email is valid")
@@ -54,7 +57,7 @@ export default function Signup() {
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Signup Page</h2>
-          {/* {auth.currentUser.email} */}
+          {/* {currentUser.email} */}
           {error && <Alert variant='danger'>{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
