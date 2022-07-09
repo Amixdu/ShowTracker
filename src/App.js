@@ -9,6 +9,7 @@ import { Container } from 'react-bootstrap'
 import AuthProvider from './contexts/AuthContext';
 import List from './List';
 import ForgotPassword from './ForgotPassword';
+import PrivateRoute from './PrivateRoute';
 
 
 function App() {
@@ -38,9 +39,7 @@ function App() {
                 <MainPage />
               </Route>
 
-              <Route path="/list">
-                  <List />
-              </Route>
+              <PrivateRoute path="/list" component={List} />
 
               <div style={{ backgroundColor:'#1569C7'}}>
 
@@ -55,9 +54,7 @@ function App() {
                       <Signup />
                     </Route>
 
-                    <Route path="/home">
-                      <Home />
-                    </Route>
+                    <PrivateRoute path="/home" component={Home} />
 
                     <Route path="/forgot-password">
                       <ForgotPassword />
