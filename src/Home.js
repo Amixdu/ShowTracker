@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Button, Card, Alert } from 'react-bootstrap'
+import Loader from './Loader'
 
 import { useAuth } from './contexts/AuthContext'
 
@@ -8,8 +9,10 @@ export default function MainPage() {
   const [error, setError] = useState()
   const { currentUser, logout } = useAuth()
   const history = useHistory()
+  const [loading, setLoading] = useState(false)
 
   const handleLogout = async () => {
+    setLoading(true)
     setError('')
 
     try{
@@ -20,10 +23,12 @@ export default function MainPage() {
       setError('Logout Failed')
     }
 
+    setLoading(false)
   }
 
   return (
     <>
+      {loading && <Loader />}
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>

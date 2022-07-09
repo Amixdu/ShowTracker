@@ -9,11 +9,6 @@ import { useAuth } from './contexts/AuthContext'
 export default function MainPage() {
   const [error, setError] = useState()
   const { currentUser } = useAuth()
-  const [hover, setHover] = useState()
-
-  const handleLogout = () => {
-
-  }
 
   return (
     <div style={{backgroundImage:`url(${poster})`, height:'100vh', width: '100vw', backgroundPosition: 'center', backgroundSize: 'cover' }}>

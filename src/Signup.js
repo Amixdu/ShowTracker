@@ -2,6 +2,7 @@ import { Alert } from 'react-bootstrap'
 import React, { useRef, useState } from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
+import Loader from './Loader'
 
 
 import { useAuth } from './contexts/AuthContext'
@@ -54,6 +55,7 @@ export default function Signup() {
   return (
     <div>
 
+      {loading && <Loader />}
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Signup Page</h2>
