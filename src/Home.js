@@ -1,14 +1,24 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Button, Card, Alert } from 'react-bootstrap'
 
 import { useAuth } from './contexts/AuthContext'
 
 export default function MainPage() {
   const [error, setError] = useState()
-  const { currentUser } = useAuth()
+  const { currentUser, logout } = useAuth()
+  const history = useHistory()
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    setError('')
+
+    try{
+      await logout()
+      history.push('/')
+    }
+    catch{
+      setError('Logout Failed')
+    }
 
   }
 

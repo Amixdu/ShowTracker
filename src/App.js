@@ -8,6 +8,7 @@ import Signup from './Signup';
 import { Container } from 'react-bootstrap'
 import AuthProvider from './contexts/AuthContext';
 import List from './List';
+import ForgotPassword from './ForgotPassword';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="App" style={{ backgroundColor:'white'}}>
+        <div className="App">
 
             {/* Enter Nav Bar outside of Switch */}
 
@@ -58,21 +59,17 @@ function App() {
                       <Home />
                     </Route>
 
+                    <Route path="/forgot-password">
+                      <ForgotPassword />
+                    </Route>
+
                   </div>
 
                 </Container>
 
               </div>
 
-              
-              
-
-
-
             </Switch>
-
-
-          
 
         </div>
       </AuthProvider>
