@@ -26,7 +26,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="App">
+        <div className="App" style={{ backgroundColor:'#1569C7'}}>
 
           {/* Enter Nav Bar outside of Switch */}
 

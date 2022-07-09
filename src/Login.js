@@ -41,40 +41,43 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <>
+      <div>
 
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Login Page</h2>
-          {/* {auth.currentUser.email} */}
-          {success? <Alert>Sucess</Alert> : error && <Alert variant='danger'>{error}</Alert>}
+        <Card>
+          <Card.Body>
+            <h2 className="text-center mb-4">Login Page</h2>
+            {/* {auth.currentUser.email} */}
+            {success? <Alert>Sucess</Alert> : error && <Alert variant='danger'>{error}</Alert>}
 
-          <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
 
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required></Form.Control>
-            </Form.Group>
+              <Form.Group id="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" ref={emailRef} required></Form.Control>
+              </Form.Group>
 
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required></Form.Control>
-            </Form.Group>
+              <Form.Group id="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" ref={passwordRef} required></Form.Control>
+              </Form.Group>
 
-            <br></br>
+              <br></br>
 
-            <Button disbaled={loading} className='w-100' type="submit">
-              Login
-            </Button>
+              <Button disbaled={loading} className='w-100' type="submit">
+                Login
+              </Button>
 
-          </Form>
-        </Card.Body>
-      </Card>
-  
-      <div className="w-100 text-center mt-2">
-        Don't have an account? <Link to="/signup"> Signup </Link>
+            </Form>
+          </Card.Body>
+        </Card>
+
+        <div className="w-100 text-center mt-2" style={{ color:'white' }}>
+          Don't have an account? <Link to="/signup" style={{ color:'white' }}> Signup </Link>
+        </div>
+
       </div>
-      
-    </div>
+    </>
+    
   )
 }
