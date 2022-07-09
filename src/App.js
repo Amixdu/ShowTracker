@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import React, { useState, useRef, useEffect} from 'react'
 import { BrowserRouter as Router, Route, Routes, Switch } from "react-router-dom";
 import Login from './Login';
@@ -45,6 +45,10 @@ function App() {
 
                 <Route path="/signup">
                   <Signup />
+                </Route>
+
+                <Route exact path="/home">
+                  <Home />
                 </Route>
 
               </div>

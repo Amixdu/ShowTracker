@@ -29,7 +29,7 @@ export default function Login() {
       await login(emailRef.current.value, passwordRef.current.value)
       console.log("Success")
       setSuccess(true)
-      history.push("/")
+      history.push("/home")
     }
     catch(error){
       console.log(error)

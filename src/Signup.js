@@ -40,7 +40,7 @@ export default function Signup() {
       await signup(emailRef.current.value, passwordRef.current.value)
       // setCurrentU(user)
       console.log('Success')
-      history.push("/")
+      history.push("/home")
     }
     catch(error){
       setError("Please ensure the entered Email is valid")
