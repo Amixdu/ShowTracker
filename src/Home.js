@@ -19,18 +19,12 @@ export default function MainPage() {
           <h2 className="text-center mb-4">Show Tracker</h2>
           <strong> {currentUser.email} </strong>
           {error && <Alert variant='danger'>{error}</Alert>}
-
-          
         </Card.Body>
         
       </Card>
 
-      <Link to="/login"> Login </Link>
-        <br></br>
-      <Link to="/signup"> Signup </Link>
-
       <div className="w-100 text-center mt-2">
-        <Button variant='link'>Logout</Button>
+        <Button style={{ backgroundColor:'white', color:'black' }}>Logout</Button>
       </div>
         
     </>
