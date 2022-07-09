@@ -16,15 +16,18 @@ export default function MainPage() {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Show Tracker</h2>
-          <strong> {currentUser.email} </strong>
+          <h2 className="text-center mb-4">Profile</h2>
+          <h5 className="text-center mb-4">{currentUser.email}</h5>
+          {/* <strong> {currentUser.email} </strong> */}
+          <Link to="/list" className='btn btn-primary w-100'>My List</Link>
+          {/* <h5 className="text-center mb-4">{currentUser.email}</h5> */}
           {error && <Alert variant='danger'>{error}</Alert>}
         </Card.Body>
         
       </Card>
 
       <div className="w-100 text-center mt-2">
-        <Button style={{ backgroundColor:'white', color:'black' }}>Logout</Button>
+        <Button onClick={handleLogout} style={{ backgroundColor:'white', color:'black' }}>Logout</Button>
       </div>
         
     </>

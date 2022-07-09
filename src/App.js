@@ -7,6 +7,7 @@ import MainPage from './MainPage';
 import Signup from './Signup';
 import { Container } from 'react-bootstrap'
 import AuthProvider from './contexts/AuthContext';
+import List from './List';
 
 
 function App() {
@@ -26,40 +27,52 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="App" style={{ backgroundColor:'#1569C7'}}>
+        <div className="App" style={{ backgroundColor:'white'}}>
 
-          {/* Enter Nav Bar outside of Switch */}
+            {/* Enter Nav Bar outside of Switch */}
 
-          <Switch>
+            <Switch>
 
-            <Route exact path="/">
-              <MainPage />
-            </Route>
+              <Route exact path="/">
+                <MainPage />
+              </Route>
 
-            <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh "}}>
-              <div className='w-100' style={{ maxWidth: '400px' }}>
+              <Route path="/list">
+                  <List />
+              </Route>
 
-                <Route path="/login">
-                  <Login />
-                </Route>
+              <div style={{ backgroundColor:'#1569C7'}}>
 
-                <Route path="/signup">
-                  <Signup />
-                </Route>
+                <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh" }}>
+                  <div className='w-100' style={{ maxWidth: '400px' }}>
 
-                <Route exact path="/home">
-                  <Home />
-                </Route>
+                    <Route path="/login">
+                      <Login />
+                    </Route>
+
+                    <Route path="/signup">
+                      <Signup />
+                    </Route>
+
+                    <Route path="/home">
+                      <Home />
+                    </Route>
+
+                  </div>
+
+                </Container>
 
               </div>
-            </Container>
-            
 
-            <Route path="/home">
-              <Home />
-            </Route>
+              
+              
 
-          </Switch>
+
+
+            </Switch>
+
+
+          
 
         </div>
       </AuthProvider>

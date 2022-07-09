@@ -34,7 +34,7 @@ export default function Login() {
     catch(error){
       console.log(error)
       setSuccess(false)
-      setError("Login Failed")
+      setError("Logout Failed")
     }
 
     setLoading(false)
@@ -44,11 +44,12 @@ export default function Login() {
     <>
       <div>
 
+        {loading && 'Loading ...'}
         <Card>
           <Card.Body>
             <h2 className="text-center mb-4">Login Page</h2>
             {/* {auth.currentUser.email} */}
-            {success? <Alert>Sucess</Alert> : error && <Alert variant='danger'>{error}</Alert>}
+            {success? <Alert>Success</Alert> : error && <Alert variant='danger'>{error}</Alert>}
 
             <Form onSubmit={handleSubmit}>
 
