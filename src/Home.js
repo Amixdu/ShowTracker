@@ -10,6 +10,7 @@ export default function MainPage() {
   const { currentUser, logout, pull, pulledData } = useAuth()
   const history = useHistory()
   const [loading, setLoading] = useState(false)
+  // const readData = pull(currentUser.uid, 'users/')
 
   // console.log(currentUser)
 
@@ -29,9 +30,7 @@ export default function MainPage() {
   }
 
   useEffect(() => {
-    // console.log(currentUser.uid)
-    pull(currentUser.uid, 'users/')
-    console.log(pulledData)
+    
   }, [])
   
 
@@ -42,10 +41,10 @@ export default function MainPage() {
         <Card.Body>
           {error && <Alert variant='danger'>{error}</Alert>}
           <h2 className="text-center mb-4">Profile</h2>
-          <h5 className="text-center mb-4">{currentUser.email + ' ' + (pulledData.isAdmin ? '(admin)' : '')}</h5>
+          <h5 className="text-center mb-4">{currentUser.email + (pulledData.isAdmin ? " (admin)" : "")}</h5>
           <Link to="/list" className='btn btn-primary w-100 mb-2'>My List</Link>
           {pulledData.isAdmin && 
-          <Link to="/list" className='btn btn-primary w-100'>Add/Update Shows</Link>
+          <Link to="/admin-update" className='btn btn-primary w-100'>Add/Update Shows</Link>
           }
         </Card.Body>
         

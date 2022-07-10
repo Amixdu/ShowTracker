@@ -10,6 +10,7 @@ import AuthProvider from './contexts/AuthContext';
 import List from './List';
 import ForgotPassword from './ForgotPassword';
 import PrivateRoute from './PrivateRoute';
+import AdminUpdate from './AdminUpdate';
 
 
 function App() {
@@ -59,6 +60,8 @@ function App() {
                     <Route path="/forgot-password">
                       <ForgotPassword />
                     </Route>
+
+                    <Route path="/admin-update" component={AdminUpdate}/>
 
                   </div>
 

@@ -62,7 +62,7 @@ export default function AuthProvider({ children }) {
     }).catch((error) => {
       console.log(error)
     })
-    return pulledData
+    return
   }
 
   useEffect(() => {
@@ -71,8 +71,8 @@ export default function AuthProvider({ children }) {
       try{
         await pull(user.uid, 'users/')
       }
-      catch{
-
+      catch(error){
+        console.log(error)
       }
       
       setLoading(false)
@@ -80,6 +80,7 @@ export default function AuthProvider({ children }) {
     return unsubscribe
   }, [])
   
+
 
   const value = {
     currentUser,
@@ -92,6 +93,7 @@ export default function AuthProvider({ children }) {
     pulledData
   }
 
+  // The !loading waits until currentUser is set (loading is set to false once everything is saved)
   return (
     <AuthContext.Provider value={value}>
         {!loading && children}
