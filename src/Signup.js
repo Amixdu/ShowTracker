@@ -39,12 +39,12 @@ export default function Signup() {
     try{
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-      // setCurrentU(user)
-      console.log('Success')
       history.push("/home")
+      console.log('Signup Success')
     }
     catch(error){
-      setError("Please ensure the entered Email is valid")
+      console.log(error)
+      setError("Signup Failed")
     }
 
     setLoading(false)

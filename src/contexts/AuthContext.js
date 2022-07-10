@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 const AuthContext = React.createContext()
 
@@ -14,8 +15,18 @@ export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
   
+  // Push email and isAdmin to databse when signing up
   function signup(email, password){
-    return createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setCurrentUser(user)
+        push(user.uid, email, false)
+      })
+      .catch((error) => {
+        console.log(error.message)
+      });
+    return
   }
 
   function login(email, password){
@@ -30,13 +41,19 @@ export default function AuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email)
   }
 
-  useEffect(() => {
+  function push(userId, email, isAdmin){
+    const db = getDatabase()
+    set(ref(db, 'users/' + userId), {
+      email: email,
+      isAdmin: isAdmin,
+    })
+  }
 
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user)
       setLoading(false)
     })
-
     return unsubscribe
   }, [])
   
@@ -46,7 +63,8 @@ export default function AuthProvider({ children }) {
     signup,
     login,
     logout,
-    resetPassword
+    resetPassword,
+    push
   }
 
   return (

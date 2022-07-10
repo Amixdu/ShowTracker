@@ -11,6 +11,8 @@ export default function MainPage() {
   const history = useHistory()
   const [loading, setLoading] = useState(false)
 
+  // console.log(currentUser)
+
   const handleLogout = async () => {
     setLoading(true)
     setError('')
@@ -35,7 +37,6 @@ export default function MainPage() {
           <h5 className="text-center mb-4">{currentUser.email}</h5>
           {/* <strong> {currentUser.email} </strong> */}
           <Link to="/list" className='btn btn-primary w-100'>My List</Link>
-          {/* <h5 className="text-center mb-4">{currentUser.email}</h5> */}
           {error && <Alert variant='danger'>{error}</Alert>}
         </Card.Body>
         
