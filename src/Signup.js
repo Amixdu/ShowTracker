@@ -19,8 +19,6 @@ export default function Signup() {
   const history = useHistory()
 
   const { signup, currentUser } = useAuth()
-  const [currentU, setCurrentU] = useState()
-
   
   async function handleSubmit(e){
     e.preventDefault()
@@ -39,8 +37,8 @@ export default function Signup() {
     try{
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-      history.push("/home")
       console.log('Signup Success')
+      history.push("/home")
     }
     catch(error){
       console.log(error)
@@ -48,7 +46,6 @@ export default function Signup() {
     }
 
     setLoading(false)
-
   }
 
 

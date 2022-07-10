@@ -15,9 +15,8 @@ export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
   
-  // Push email and isAdmin to databse when signing up
-  function signup(email, password){
-    createUserWithEmailAndPassword(auth, email, password)
+  async function signup(email, password){
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         setCurrentUser(user)
@@ -26,7 +25,7 @@ export default function AuthProvider({ children }) {
       .catch((error) => {
         console.log(error.message)
       });
-    return
+    return 
   }
 
   function login(email, password){
@@ -63,8 +62,7 @@ export default function AuthProvider({ children }) {
     signup,
     login,
     logout,
-    resetPassword,
-    push
+    resetPassword
   }
 
   return (
