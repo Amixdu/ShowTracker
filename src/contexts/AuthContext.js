@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, get, child } from "firebase/database";
 
 const AuthContext = React.createContext()
 
-// The exported function to obtain singup and currentUser to be used in other components
 export function useAuth() {
   return useContext(AuthContext)
 }
@@ -14,12 +13,14 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
+  const [pulledData, setPulledData] = useState()
   
+  // Push email and isAdmin when creating a new account
   async function signup(email, password){
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setCurrentUser(user)
+        // setCurrentUser(user)
         push(user.uid, email, false)
       })
       .catch((error) => {
@@ -48,9 +49,26 @@ export default function AuthProvider({ children }) {
     })
   }
 
+  async function pull(userId){
+    const dbRef = ref(getDatabase())
+    await get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+      if (snapshot.exists()){
+        setPulledData(snapshot.val())
+      }
+      else{
+        setPulledData('')
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+    return pulledData
+  }
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
+      await pull(user.uid)
+      
       setLoading(false)
     })
     return unsubscribe
@@ -62,7 +80,10 @@ export default function AuthProvider({ children }) {
     signup,
     login,
     logout,
-    resetPassword
+    resetPassword,
+    push,
+    pull,
+    pulledData
   }
 
   return (
