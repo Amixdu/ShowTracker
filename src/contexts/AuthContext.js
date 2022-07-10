@@ -68,7 +68,12 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
-      await pull(user.uid, 'users/')
+      try{
+        await pull(user.uid, 'users/')
+      }
+      catch{
+
+      }
       
       setLoading(false)
     })
