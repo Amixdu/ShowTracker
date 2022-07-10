@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { auth } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { getDatabase, ref, set, get, child } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 
 const AuthContext = React.createContext()
 
@@ -21,7 +21,7 @@ export default function AuthProvider({ children }) {
       .then((userCredential) => {
         const user = userCredential.user;
         // setCurrentUser(user)
-        push(user.uid, email, false)
+        push_user(user.uid, email, false)
       })
       .catch((error) => {
         console.log(error.message)
@@ -41,7 +41,7 @@ export default function AuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email)
   }
 
-  function push(userId, email, isAdmin){
+  function push_user(userId, email, isAdmin){
     const db = getDatabase()
     set(ref(db, 'users/' + userId), {
       email: email,
@@ -49,9 +49,10 @@ export default function AuthProvider({ children }) {
     })
   }
 
-  async function pull(userId){
+  async function pull(userId, root){
     const dbRef = ref(getDatabase())
-    await get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+    // const root = isUsers ? 'users/' : 'shows/'
+    await get(child(dbRef, root + userId)).then((snapshot) => {
       if (snapshot.exists()){
         setPulledData(snapshot.val())
       }
@@ -67,7 +68,7 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
-      await pull(user.uid)
+      await pull(user.uid, 'users/')
       
       setLoading(false)
     })
@@ -81,7 +82,7 @@ export default function AuthProvider({ children }) {
     login,
     logout,
     resetPassword,
-    push,
+    push_user,
     pull,
     pulledData
   }

@@ -30,7 +30,7 @@ export default function MainPage() {
 
   useEffect(() => {
     // console.log(currentUser.uid)
-    pull(currentUser.uid)
+    pull(currentUser.uid, 'users/')
     console.log(pulledData)
   }, [])
   
