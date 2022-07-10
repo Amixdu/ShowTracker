@@ -44,7 +44,10 @@ export default function MainPage() {
           <h5 className="text-center mb-4">{currentUser.email + (pulledData.isAdmin ? " (admin)" : "")}</h5>
           <Link to="/list" className='btn btn-primary w-100 mb-2'>My List</Link>
           {pulledData.isAdmin && 
-          <Link to="/admin-update" className='btn btn-primary w-100'>Add/Update Shows</Link>
+          <Link to="/admin-add" className='btn btn-primary w-100 mb-2'>Add Shows</Link>
+          }
+          {pulledData.isAdmin && 
+          <Link to="/admin-update" className='btn btn-primary w-100'>Update Shows</Link>
           }
         </Card.Body>
         

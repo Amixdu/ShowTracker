@@ -10,10 +10,11 @@ import { useAuth } from './contexts/AuthContext'
 // import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
-export default function AdminUpdate() {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
+export default function AdminAdd() {
+  const nameRef = useRef()
+  const descriptionRef = useRef()
+  const dateRef = useRef()
+  const imageRef = useRef()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -22,10 +23,6 @@ export default function AdminUpdate() {
   
   async function handleSubmit(e){
     e.preventDefault()
-
-    if (passwordRef.current.value !== passwordConfirmRef.current.value){
-      return setError('Passwords do not match')
-    }
 
     setError('')
 
@@ -36,7 +33,7 @@ export default function AdminUpdate() {
 
     try{
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
+    //   await signup(showNameRef.current.value, passwordRef.current.value)
       console.log('Signup Success')
       history.push("/home")
     }
@@ -55,26 +52,31 @@ export default function AdminUpdate() {
       {loading && <Loader />}
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Update Shows</h2>
-          {/* {currentUser.email} */}
+          <h2 className="text-center mb-4">Add Shows</h2>
           {error && <Alert variant='danger'>{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
 
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required></Form.Control>
+            <Form.Group id="name" className='mb-3'>
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" ref={nameRef} required></Form.Control>
             </Form.Group>
 
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required></Form.Control>
+            <Form.Group id="description" className='mb-3'>
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" rows={3} ref={descriptionRef} required></Form.Control>
             </Form.Group>
 
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required></Form.Control>
+            <Form.Group id="date" className='mb-3'>
+              <Form.Label>Air Date</Form.Label>
+              <Form.Control type='date' ref={dateRef} required></Form.Control>
             </Form.Group>
+
+            <Form.Group id="image">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type='file' accept="image/png, image/jpeg" ref={dateRef} required></Form.Control>
+            </Form.Group>
+
 
             <br></br>
 
@@ -87,7 +89,7 @@ export default function AdminUpdate() {
       </Card>
       
       <div className="w-100 text-center mt-2" style={{ color:'white' }}>
-        Already have an account? <Link to="/login" style={{ color:'white' }}> Login </Link>
+        Want to update a show instead? <Link to="/admin-update" style={{ color:'white' }}> Update </Link>
       </div>
       
     </div>

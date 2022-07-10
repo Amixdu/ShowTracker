@@ -11,6 +11,7 @@ import List from './List';
 import ForgotPassword from './ForgotPassword';
 import PrivateRoute from './PrivateRoute';
 import AdminUpdate from './AdminUpdate';
+import AdminAdd from './AdminAdd';
 
 
 function App() {
@@ -62,6 +63,9 @@ function App() {
                     </Route>
 
                     <Route path="/admin-update" component={AdminUpdate}/>
+
+                    <Route path="/admin-add" component={AdminAdd}/>
+
 
                   </div>
 

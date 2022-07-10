@@ -68,6 +68,9 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
+
+      // Everytime the users authentication state changes, data (from the realtime database) for the corresponding user is pulled and stored
+      // in addition to the user itself (from Firebase authentication)
       try{
         await pull(user.uid, 'users/')
       }
@@ -75,6 +78,7 @@ export default function AuthProvider({ children }) {
         console.log(error)
       }
       
+      // setLoading to false once required data is saved
       setLoading(false)
     })
     return unsubscribe
