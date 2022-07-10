@@ -7,12 +7,11 @@ import { useAuth } from './contexts/AuthContext'
 
 export default function MainPage() {
   const [error, setError] = useState()
-  const { currentUser, logout, pull, pulledData } = useAuth()
+  const { currentUser, logout, pull } = useAuth()
   const history = useHistory()
   const [loading, setLoading] = useState(false)
-  // const readData = pull(currentUser.uid, 'users/')
+  const [fetchedUserData, setFetchedUserData] = useState()
 
-  // console.log(currentUser)
 
   const handleLogout = async () => {
     setLoading(true)
@@ -30,7 +29,12 @@ export default function MainPage() {
   }
 
   useEffect(() => {
-    
+    const fetch = async () => {
+      const res = await pull(currentUser.uid, 'users/')
+      setFetchedUserData(res)
+    }
+
+    fetch()
   }, [])
   
 
@@ -41,13 +45,10 @@ export default function MainPage() {
         <Card.Body>
           {error && <Alert variant='danger'>{error}</Alert>}
           <h2 className="text-center mb-4">Profile</h2>
-          <h5 className="text-center mb-4">{currentUser.email + (pulledData.isAdmin ? " (admin)" : "")}</h5>
+          <h5 className="text-center mb-4">{currentUser.email + (fetchedUserData?.isAdmin ? " (admin)" : "")}</h5>
           <Link to="/list" className='btn btn-primary w-100 mb-2'>My List</Link>
-          {pulledData.isAdmin && 
-          <Link to="/admin-add" className='btn btn-primary w-100 mb-2'>Add Shows</Link>
-          }
-          {pulledData.isAdmin && 
-          <Link to="/admin-update" className='btn btn-primary w-100'>Update Shows</Link>
+          {fetchedUserData?.isAdmin && 
+          <Link to="/admin" className='btn btn-primary w-100 mb-2'>Add/Update Shows</Link>
           }
         </Card.Body>
         

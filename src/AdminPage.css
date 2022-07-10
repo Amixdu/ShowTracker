@@ -1,0 +1,12 @@
+.buttonRight{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+}
+.box{
+    margin: auto;
+    padding-top: 10px;
+    width: 97%;
+    position: relative;
+}

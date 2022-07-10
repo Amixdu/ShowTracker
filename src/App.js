@@ -12,6 +12,7 @@ import ForgotPassword from './ForgotPassword';
 import PrivateRoute from './PrivateRoute';
 import AdminUpdate from './AdminUpdate';
 import AdminAdd from './AdminAdd';
+import AdminPage from './AdminPage';
 
 
 function App() {
@@ -43,6 +44,9 @@ function App() {
 
               <PrivateRoute path="/list" component={List} />
 
+              <Route path="/admin" component={AdminPage} />
+
+
               <div style={{ backgroundColor:'#1569C7'}}>
 
                 <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh" }}>
@@ -62,9 +66,10 @@ function App() {
                       <ForgotPassword />
                     </Route>
 
-                    <Route path="/admin-update" component={AdminUpdate}/>
+                    <Route path="/admin-update" component={AdminUpdate} />
 
-                    <Route path="/admin-add" component={AdminAdd}/>
+                    <Route path="/admin-add" component={AdminAdd} />
+
 
 
                   </div>

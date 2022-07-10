@@ -52,17 +52,19 @@ export default function AuthProvider({ children }) {
   async function pull(userId, root){
     const dbRef = ref(getDatabase())
     // const root = isUsers ? 'users/' : 'shows/'
-    await get(child(dbRef, root + userId)).then((snapshot) => {
+    const res = await get(child(dbRef, root + userId)).then((snapshot) => {
       if (snapshot.exists()){
         setPulledData(snapshot.val())
+        return (snapshot.val())
       }
       else{
         setPulledData('')
+        return ('')
       }
     }).catch((error) => {
       console.log(error)
     })
-    return
+    return res
   }
 
   useEffect(() => {
@@ -71,12 +73,13 @@ export default function AuthProvider({ children }) {
 
       // Everytime the users authentication state changes, data (from the realtime database) for the corresponding user is pulled and stored
       // in addition to the user itself (from Firebase authentication)
-      try{
-        await pull(user.uid, 'users/')
-      }
-      catch(error){
-        console.log(error)
-      }
+      // try{
+      //   await pull(user.uid, 'users/')
+      // }
+      // catch(error){
+      //   setPulledData('')
+      //   console.log(error)
+      // }
       
       // setLoading to false once required data is saved
       setLoading(false)
