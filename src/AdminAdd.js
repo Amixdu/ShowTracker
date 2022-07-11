@@ -30,7 +30,7 @@ export default function AdminAdd() {
     setLoading(true)
     
     const rand = Math.floor((Math.random() * 100) + 1)
-    const id = nameRef.current.value + authorRef.current.value + dateRef.current.value + rand
+    const id = (nameRef.current.value + authorRef.current.value + dateRef.current.value + rand).split(" ").join("")
 
     try{
         const file = imageRef.current.files[0]
