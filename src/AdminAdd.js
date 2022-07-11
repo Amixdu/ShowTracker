@@ -51,7 +51,7 @@ export default function AdminAdd() {
   return (
     <div>
 
-      {loading && <Loader />}
+      {loading && <Loader backgCol={'light'}/>}
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Add Shows</h2>

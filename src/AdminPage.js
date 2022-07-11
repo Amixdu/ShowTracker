@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Table } from 'react-bootstrap'
+import Loader from './Loader'
 
 export default function AdminPage() {
   const { pull } = useAuth()
   const [fetchedUserData, setFetchedUserData] = useState()
+  const [loading, setLoading] = useState()
 
   useEffect(() => {
     const fetch = async () => {
@@ -27,9 +29,18 @@ export default function AdminPage() {
           </div>
       </div>  
 
-      {fetchedUserData && 
+      {fetchedUserData ? 
       <div className='mt-5'>
         <Table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Creator</th>
+              <th>Description</th>
+              <th>Air Date</th>
+              <th>Air Date</th>
+            </tr>
+          </thead>
 
           {Object.entries(fetchedUserData).map((entry) => {
               const [key, value] = entry
@@ -41,7 +52,7 @@ export default function AdminPage() {
 
         </Table>
 
-      </div>}
+      </div> : <Loader />}
     </>
   )
 }

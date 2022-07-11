@@ -36,7 +36,7 @@ export default function MainPage() {
   
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Loader backgCol={'light'}/>}
       <Card>
         <Card.Body>
           {error && <Alert variant='danger'>{error}</Alert>}

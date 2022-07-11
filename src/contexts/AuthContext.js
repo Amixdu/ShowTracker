@@ -67,11 +67,11 @@ export default function AuthProvider({ children }) {
     // const root = isUsers ? 'users/' : 'shows/'
     const res = await get(child(dbRef, root + id)).then((snapshot) => {
       if (snapshot.exists()){
-        setPulledData(snapshot.val())
+        // setPulledData(snapshot.val())
         return (snapshot.val())
       }
       else{
-        setPulledData('')
+        // setPulledData('')
         return ('')
       }
     }).catch((error) => {
