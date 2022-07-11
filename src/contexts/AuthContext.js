@@ -51,6 +51,17 @@ export default function AuthProvider({ children }) {
     })
   }
 
+  async function pushShow(showId, showName, showAuthor, showDesc, showDate, showImageUrl){
+    const db = getDatabase()
+    await set(ref(db, 'shows/' + showId), {
+      name: showName,
+      description: showDesc,
+      author: showAuthor,
+      date: showDate,
+      url: showImageUrl
+    })
+  }
+
   async function pull(userId, root){
     const dbRef = ref(getDatabase())
     // const root = isUsers ? 'users/' : 'shows/'
@@ -126,7 +137,8 @@ export default function AuthProvider({ children }) {
     push_user,
     pull,
     pulledData,
-    uploadImage
+    uploadImage,
+    pushShow
   }
 
   // The !loading waits until currentUser is set (loading is set to false once everything is saved)
