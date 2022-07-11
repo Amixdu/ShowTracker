@@ -6,17 +6,15 @@ import Loader from './Loader'
 import { useAuth } from './contexts/AuthContext'
 
 export default function MainPage() {
-  const [error, setError] = useState()
   const { currentUser, logout, pull } = useAuth()
   const history = useHistory()
+  const [error, setError] = useState()
   const [loading, setLoading] = useState(false)
   const [fetchedUserData, setFetchedUserData] = useState()
-
 
   const handleLogout = async () => {
     setLoading(true)
     setError('')
-
     try{
       await logout()
       history.push('/')
@@ -24,7 +22,6 @@ export default function MainPage() {
     catch{
       setError('Logout Failed')
     }
-
     setLoading(false)
   }
 
@@ -37,7 +34,6 @@ export default function MainPage() {
     fetch()
   }, [])
   
-
   return (
     <>
       {loading && <Loader />}
@@ -51,7 +47,6 @@ export default function MainPage() {
           <Link to="/admin" className='btn btn-primary w-100 mb-2'>Add/Update Shows</Link>
           }
         </Card.Body>
-        
       </Card>
 
       <div className="w-100 text-center mt-2">

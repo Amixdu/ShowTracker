@@ -17,29 +17,27 @@ export default function AdminAdd() {
   const imageRef = useRef()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [imageUrl, setImageUrl] = useState()
   const history = useHistory()
 
-  const { signup, currentUser } = useAuth()
+  const { uploadImage, currentUser } = useAuth()
   
   async function handleSubmit(e){
     e.preventDefault()
-
     setError('')
-
-    // console.log(emailRef.current.value)
-    // console.log(passwordRef.current.value)
-
-    // If checks passed, signup
+    
+    console.log(nameRef.current.value)
+    console.log(descriptionRef.current.value)
+    console.log(dateRef.current.value)
+    console.log(imageRef.current.files[0])
 
     try{
-      setLoading(true)
-    //   await signup(showNameRef.current.value, passwordRef.current.value)
-      console.log('Signup Success')
-      history.push("/home")
+        const file = imageRef.current.files[0]
+        setImageUrl(await uploadImage(file))
     }
-    catch(error){
-      console.log(error)
-      setError("Signup Failed")
+    catch{
+        console.log(error)
+        setError("Upload Failed")
     }
 
     setLoading(false)
@@ -74,14 +72,14 @@ export default function AdminAdd() {
 
             <Form.Group id="image">
               <Form.Label>Image</Form.Label>
-              <Form.Control type='file' accept="image/png, image/jpeg" ref={dateRef} required></Form.Control>
+              <Form.Control type='file' accept="image/png, image/jpeg" ref={imageRef}></Form.Control>
             </Form.Group>
 
 
             <br></br>
 
             <Button disbaled={loading} className='w-100' type="submit">
-              Sign up
+              Add
             </Button>
 
           </Form>
@@ -89,7 +87,7 @@ export default function AdminAdd() {
       </Card>
       
       <div className="w-100 text-center mt-2" style={{ color:'white' }}>
-        Want to update a show instead? <Link to="/admin-update" style={{ color:'white' }}> Update </Link>
+        <Link to="/home" style={{ color:'white' }}> Back to Home </Link>
       </div>
       
     </div>

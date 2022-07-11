@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { auth } from "../firebase"
+import { auth, storage } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
+import { ref as sRef, uploadBytes,getDownloadURL } from "firebase/storage";
 
 const AuthContext = React.createContext()
 
@@ -14,6 +15,7 @@ export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
   const [pulledData, setPulledData] = useState()
+  const [downloadUrl, setDownloadUrl] = useState()
   
   // Push email and isAdmin when creating a new account
   async function signup(email, password){
@@ -67,6 +69,32 @@ export default function AuthProvider({ children }) {
     return res
   }
 
+  async function uploadImage(file){
+    const fileRef = sRef(storage, file.name)
+
+    await uploadBytes(fileRef, file).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+    });
+
+    const res = await getDownloadURL(sRef(storage, fileRef)).then((url) => {
+      return url
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    return res
+  }
+
+  // async function downloadImage(file){
+  //   const fileRef = sRef(storage, file.name)
+  //   const res = await getDownloadURL(sRef(storage, fileRef)).then((url) => {
+  //     return url
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  //   return res
+  // }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
@@ -97,7 +125,8 @@ export default function AuthProvider({ children }) {
     resetPassword,
     push_user,
     pull,
-    pulledData
+    pulledData,
+    uploadImage
   }
 
   // The !loading waits until currentUser is set (loading is set to false once everything is saved)
