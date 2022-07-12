@@ -94,7 +94,7 @@ export default function AdminAdd() {
       </Card>
       
       <div className="w-100 text-center mt-2" style={{ color:'white' }}>
-        <Link to="/home" style={{ color:'white' }}> Back to Home </Link>
+        <Link to="/admin" style={{ color:'white' }}> Go Back </Link>
       </div>
       
     </div>

@@ -82,8 +82,9 @@ export default function AdminPage() {
       {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>}
       <div className='box'>
           <div className='buttonRight'>
+              <Link to="/home" className='btn btn-primary'>Go Back</Link>
+              {'  '}
               <Link to="/admin-add" className='btn btn-primary'>Add Shows</Link>
-              {/* <Link to="/admin-update" className='btn btn-primary'>Update</Link> */}
           </div>
       </div>  
 
