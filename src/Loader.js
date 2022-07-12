@@ -1,7 +1,7 @@
 import React from 'react'
 import { Spinner, Button } from 'react-bootstrap'
 
-export default function Loader( { backgCol, spinnerCol } ) {
+export default function Loader( { backgCol } ) {
   return (
     <>
     <Button variant={backgCol} disabled className='mb-2'>
@@ -11,8 +11,9 @@ export default function Loader( { backgCol, spinnerCol } ) {
             size="sm"
             role="status"
             aria-hidden="true"
-            variant={spinnerCol}
+            variant="primary"
         />
+        {'  '}
         Loading...
     </Button>
 </>
