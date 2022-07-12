@@ -8,7 +8,6 @@ import { Modal, Form, Alert } from 'react-bootstrap'
 import Loader from './Loader'
 
 
-
 export default function AdminPage() {
   const [fetchedUserData, setFetchedUserData] = useState()
   const [loading, setLoading] = useState()
@@ -29,8 +28,6 @@ export default function AdminPage() {
   const imageRef = useRef()
 
   const { pull, pushShow, uploadImage } = useAuth()
-
-  
 
   const handleClose = () => setShowModal(false);
   const handleShow = (id, name, author, date, description, url) => {
@@ -69,9 +66,7 @@ export default function AdminPage() {
         setError("Upload Failed")
         setLoading(false)
     }
-
   }
-
 
   useEffect(() => {
     const fetch = async () => {
