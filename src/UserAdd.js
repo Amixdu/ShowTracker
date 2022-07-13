@@ -10,7 +10,6 @@ import Loader from './Loader'
 
 export default function UserAdd() {
     const [fetchedShowData, setFetchedShowData] = useState()
-    const [fetchedUserListData, setFetchedUserListData] = useState()
     const [loading, setLoading] = useState()
     const [showModal, setShowModal] = useState()
     const [clickedShowId, setClickedShowId] = useState()
@@ -22,20 +21,15 @@ export default function UserAdd() {
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
     const [alreadyInList, setAlreadyInList] = useState([])
+    const [reload, setReload] = useState()
 
     const [statusSelect, setStatusSelect] = useState("Watching")
     const [rateSelect, setRateSelect] = useState("N/A")
     
 
-    const nameRef = useRef()
-    const authorRef = useRef()
-    const descriptionRef = useRef()
-    const dateRef = useRef()
-    const imageRef = useRef()
-
     const history = useHistory()
 
-    const { pull, pushShow, uploadImage, currentUser, pushShowToList } = useAuth()
+    const { pull, currentUser, pushShowToList } = useAuth()
 
     const handleClose = () => setShowModal(false);
     const handleShow = (id, name, author, date, description, url) => {
@@ -62,8 +56,6 @@ export default function UserAdd() {
         setSuccess(false)
         setLoading(true)
 
-        
-
         try{
             const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
             await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, statusSelect, statusSelect == "Plan To Watch" ? "N/A" : rateSelect)
@@ -72,24 +64,20 @@ export default function UserAdd() {
             setLoading(false)
             setSuccess(true)
             setShowModal(false)
+            setReload(!reload)
         }
         catch(error){
             console.log(error)
             setError("Upload Failed")
             setLoading(false)
         }
-
-        // console.log(clickedShowName)
-
-        // console.log(statusSelect)
-        // console.log(rateSelect)
-
-        // console.log(currentUser.uid)
-        // setLoading(false)
     }
 
 
     useEffect(() => {
+
+        setFetchedShowData('')
+
         const fetchShowData = async () => {
             const res = await pull('shows/')
             setFetchedShowData(res)
@@ -98,32 +86,33 @@ export default function UserAdd() {
         const fetchUserListData = async () => {
             const path = 'users/' + currentUser.uid + '/list/'
             const res = await pull(path)
-            setFetchedUserListData(res)
-            console.log(res)
+
+            // Saving the ids of already added shows to a list
             Object.entries(res).map((entry) => {
                 const [key, value] = entry
-                // console.log(key)
                 setAlreadyInList(prev => {
-                    // console.log(alreadyInList.includes(key))
-                    // console.log(alreadyInList)
                     return [... prev, key]
                 })
             })
         }
 
-        fetchShowData()
         fetchUserListData()
+        fetchShowData()
 
-    }, [])
+
+    }, [reload])
     
     return (
         <>
-        {success && <Alert style={{ textAlign:"center" }}> Your list has been successfully updated!</Alert>}
+        {/* {success && <Alert style={{ textAlign:"center" }}> Your list has been successfully updated!</Alert>} */}
         <div className='box'>
             <div className='buttonRight'>
                 <Button onClick={() => history.goBack()}>Go Back</Button>
                 {'  '}
+                <Link to="/home" className='btn btn-primary'>Home</Link>
+                {'  '}
                 <Link to="/list" className='btn btn-primary'>My List</Link>
+                
             </div>
         </div>  
 

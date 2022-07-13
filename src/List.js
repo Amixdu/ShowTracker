@@ -109,7 +109,10 @@ export default function List() {
                         <div className='buttonRight'>
                             <Button onClick={() => history.goBack()}>Go Back</Button>
                             {'  '}
+                            <Link to="/home" className='btn btn-primary'>Home</Link>
+                            {'  '}
                             <Link to="/browse-shows" className='btn btn-primary'>Add Shows to List</Link>
+                            
                         </div>
                     </div>  
 
@@ -207,7 +210,7 @@ export default function List() {
                     </Form.Select>
 
                     <Form.Label>How much would you rate the show?</Form.Label>
-                    <Form.Select onChange={(e) => {setClickedRating(e.target.value)}} aria-label="Default select example" value={clickedRating} className='mb-3' disabled={clickedStatus === "Plan To Watch" ? true : false}>
+                    <Form.Select onChange={(e) => {setClickedRating(e.target.value)}} aria-label="Default select example" value={clickedStatus !== "Plan To Watch" ? clickedRating : "N/A"} className='mb-3' disabled={clickedStatus === "Plan To Watch" ? true : false}>
                         <option value="N/A">N/A</option>
                         <option value="1 (Very Bad)">1 (Very Bad)</option>
                         <option value="2 (Bad)">2 (Bad)</option>
