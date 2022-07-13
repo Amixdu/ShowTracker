@@ -11,7 +11,8 @@ import Loader from './Loader'
 export default function AdminPage() {
   const [fetchedUserData, setFetchedUserData] = useState()
   const [loading, setLoading] = useState()
-  const [showModal, setShowModal] = useState()
+  const [showRemoveModal, setShowRemoveModal] = useState()
+  const [showUpdateModal, setShowUpdateModal] = useState()
   const [clickedShowId, setClickedShowId] = useState()
   const [clickedShowName, setClickedShowName] = useState()
   const [clickedShowAuthor, setClickedShowAuthor] = useState()
@@ -28,17 +29,23 @@ export default function AdminPage() {
   const dateRef = useRef()
   const imageRef = useRef()
 
-  const { pull, pushShow, uploadImage } = useAuth()
+  const { pull, pushShow, uploadImage, deleteData } = useAuth()
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = (id, name, author, date, description, url) => {
+  const handleRemoveModalClose = () => setShowRemoveModal(false);
+    const handleRemoveModalShow = (id) => {
+        setClickedShowId(id)
+        setShowRemoveModal(true)
+    }
+
+  const handleUpdateModalClose = () => setShowUpdateModal(false);
+  const handleUpdateModalShow = (id, name, author, date, description, url) => {
     setClickedShowId(id)
     setClickedShowName(name)
     setClickedShowAuthor(author)
     setClickedShowDate(date)
     setClickedShowDescription(description)
     setClickedShowUrl(url)
-    setShowModal(true)
+    setShowUpdateModal(true)
     // console.log(id)
   }
 
@@ -61,7 +68,7 @@ export default function AdminPage() {
         console.log('URL saved')
         setLoading(false)
         setSuccess(true)
-        setShowModal(false)
+        setShowUpdateModal(false)
         setReload(!reload)
     }
     catch(error){
@@ -70,6 +77,34 @@ export default function AdminPage() {
         setLoading(false)
     }
   }
+
+  async function handleDelete(e){
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try{
+        const path = 'shows/' + clickedShowId
+        await deleteData(path)
+        // console.log('Delete complete')
+
+        // Deleting the show from all lists
+        const res = await pull('users/')
+        // console.log(res)
+        Object.entries(res).map(async (entry) =>{
+          const [key, value] = entry
+          await deleteData('users/' + key + '/list/' + clickedShowId)
+        })
+
+        setLoading(false)
+        setShowRemoveModal(false)
+        setReload(!reload)
+    }
+    catch(error){
+        // console.log(error)
+        setError("Delete Failed")
+        setLoading(false)
+    }
+}
 
   useEffect(() => {
     setFetchedUserData('')
@@ -85,7 +120,7 @@ export default function AdminPage() {
     <>
       {/* {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>} */}
       <div className='box'>
-          <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
+          <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows (Admin Access)</h2>
           <div className='buttonRight'>
               <Link to="/home" className='btn btn-primary'>Go Back</Link>
               {'  '}
@@ -123,7 +158,9 @@ export default function AdminPage() {
                     <td>{value.description}</td>
                     <td width="250">{value.date}</td>
                     <td width="150">
-                      <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)}>Update</Button>
+                      <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"75%" }} className='mb-2'>Update</Button>
+                      <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%" }} className='mb-2'>Remove</Button>
+
                     </td>
                   </tr>
                 )
@@ -131,7 +168,9 @@ export default function AdminPage() {
           </tbody>
         </Table>
 
-        <Modal show={showModal} onHide={handleClose}>
+      </div> : <LoaderMiddle />}
+
+      <Modal show={showUpdateModal} onHide={handleUpdateModalClose}>
           {loading && <Loader backgCol={'light'}/>}
           <Modal.Header closeButton>
             <Modal.Title> Update Show Details</Modal.Title>
@@ -175,7 +214,19 @@ export default function AdminPage() {
 
         </Modal>
 
-      </div> : <LoaderMiddle />}
+      <Modal show={showRemoveModal} onHide={handleRemoveModalClose}>
+          {loading && <Loader backgCol={'light'}/>}
+          <Modal.Header closeButton>
+              <Modal.Title style={{ textAlign:"center" }}> Note: This action will remove this show from the database. Are you sure you want to continue?</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+              {error && <Alert variant='danger'>{error}</Alert>}
+              <Button disabled={loading} className='w-100' onClick={handleDelete}>
+                  Confirm
+              </Button>
+          </Modal.Body>
+      </Modal>
     </>
   )
 }

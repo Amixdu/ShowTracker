@@ -149,8 +149,8 @@ export default function List() {
                                         <td width="200">{value.status}</td>
                                         <td width="200">{value.rating}</td>
                                         <td width="125">
-                                            <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ margin:'auto', display:'block' }} className='mb-2'>Remove</Button>
-                                            <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ margin:'auto', display:'block' }}>Update</Button>
+                                            <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"85%" }} className='mb-2'>Update</Button>
+                                            <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"85%" }} className='mb-2'>Remove</Button>
                                         </td>
                                     </tr>
                                     )
@@ -196,11 +196,6 @@ export default function List() {
             <Modal.Body>
                 {error && <Alert variant='danger'>{error}</Alert>}
                 <Form onSubmit={handleUpdate}>
-
-                    <Form.Group id="name" className='mb-3'>
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" ref={nameRef} required defaultValue={clickedShowName}></Form.Control>
-                    </Form.Group>
 
                     <Form.Label>How much have you watched?</Form.Label>
                     <Form.Select onChange={(e) => {setClickedStatus(e.target.value)}} aria-label="Default select example" className='mb-3' value={clickedStatus} >
