@@ -74,7 +74,7 @@ export default function List() {
         setLoading(true)
         try{
             const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
-            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, clickedStatus, clickedRating)
+            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, clickedStatus, clickedStatus == "Plan To Watch" ? "N/A" : clickedRating)
             console.log("List Update Success")
             setLoading(false)
             setShowUpdateModal(false)
