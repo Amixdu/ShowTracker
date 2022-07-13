@@ -51,10 +51,10 @@ export default function AdminPage() {
         const file = imageRef.current.files[0]
         const path = 'shows/' + clickedShowId
         if (file) {
-          await pushShow(clickedShowId, false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+          await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
         }
         else{
-          await pushShow(clickedShowId, false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
+          await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
         }
         
         console.log('URL saved')

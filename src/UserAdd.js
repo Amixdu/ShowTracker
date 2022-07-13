@@ -31,7 +31,7 @@ export default function UserAdd() {
     const dateRef = useRef()
     const imageRef = useRef()
 
-    const { pull, pushShow, uploadImage } = useAuth()
+    const { pull, pushShow, uploadImage, currentUser, pushShowToList } = useAuth()
 
     const handleClose = () => setShowModal(false);
     const handleShow = (id, name, author, date, description, url) => {
@@ -56,23 +56,27 @@ export default function UserAdd() {
         setSuccess(false)
         setLoading(true)
 
-        // try{
-        //     await pushShow(clickedShowId, false, 'users/', clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl)
+        try{
+            const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
+            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, statusSelect, rateSelect)
             
-            
-        //     console.log('URL saved')
-        //     setLoading(false)
-        //     setSuccess(true)
-        //     setShowModal(false)
-        // }
-        // catch(error){
-        //     console.log(error)
-        //     setError("Upload Failed")
-        //     setLoading(false)
-        // }
+            console.log('Added to list')
+            setLoading(false)
+            setSuccess(true)
+            setShowModal(false)
+        }
+        catch(error){
+            console.log(error)
+            setError("Upload Failed")
+            setLoading(false)
+        }
+
+        // console.log(clickedShowName)
 
         // console.log(statusSelect)
         // console.log(rateSelect)
+
+        // console.log(currentUser.uid)
         // setLoading(false)
 
     }
@@ -88,10 +92,10 @@ export default function UserAdd() {
     
     return (
         <>
-        {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>}
+        {success && <Alert style={{ textAlign:"center" }}> Your list has been successfully updated!</Alert>}
         <div className='box'>
             <div className='buttonRight'>
-                <Link to="/home" className='btn btn-primary'>Go Back</Link>
+                <Link to="/list" className='btn btn-primary'>Go Back</Link>
             </div>
         </div>  
 
