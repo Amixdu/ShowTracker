@@ -106,6 +106,7 @@ export default function List() {
             (fetchedUserData !== 'Empty' ? (
                 <>
                     <div className='box'>
+                        <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>My List</h2>
                         <div className='buttonRight'>
                             <Button onClick={() => history.goBack()}>Go Back</Button>
                             {'  '}
@@ -116,7 +117,7 @@ export default function List() {
                         </div>
                     </div>  
 
-                    <div className='mt-5'>
+                    <div className='mt-4'>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>

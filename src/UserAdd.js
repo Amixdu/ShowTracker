@@ -21,7 +21,7 @@ export default function UserAdd() {
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
     const [alreadyInList, setAlreadyInList] = useState([])
-    const [reload, setReload] = useState()
+    const [reload, setReload] = useState(false)
 
     const [statusSelect, setStatusSelect] = useState("Watching")
     const [rateSelect, setRateSelect] = useState("N/A")
@@ -106,6 +106,7 @@ export default function UserAdd() {
         <>
         {/* {success && <Alert style={{ textAlign:"center" }}> Your list has been successfully updated!</Alert>} */}
         <div className='box'>
+            <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
             <div className='buttonRight'>
                 <Button onClick={() => history.goBack()}>Go Back</Button>
                 {'  '}
@@ -117,7 +118,7 @@ export default function UserAdd() {
         </div>  
 
         {fetchedShowData ? 
-        <div className='mt-5'>
+        <div className='mt-4'>
             <Table striped bordered hover>
                 <thead>
                     <tr>

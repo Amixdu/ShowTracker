@@ -20,6 +20,7 @@ export default function AdminPage() {
   const [clickedShowDescription, setClickedShowDescription] = useState()
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
+  const [reload, setReload] = useState(false)
 
   const nameRef = useRef()
   const authorRef = useRef()
@@ -61,6 +62,7 @@ export default function AdminPage() {
         setLoading(false)
         setSuccess(true)
         setShowModal(false)
+        setReload(!reload)
     }
     catch(error){
         console.log(error)
@@ -70,18 +72,20 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
+    setFetchedUserData('')
     const fetch = async () => {
       const res = await pull('shows/')
       setFetchedUserData(res)
     }
 
     fetch()
-  }, [])
+  }, [reload])
   
   return (
     <>
       {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>}
       <div className='box'>
+          <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
           <div className='buttonRight'>
               <Link to="/home" className='btn btn-primary'>Go Back</Link>
               {'  '}
@@ -90,7 +94,7 @@ export default function AdminPage() {
       </div>  
 
       {fetchedUserData ? 
-      <div className='mt-5'>
+      <div className='mt-4'>
         <Table striped bordered hover>
           <thead>
             <tr>
