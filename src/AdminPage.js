@@ -71,7 +71,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await pull('', 'shows/')
+      const res = await pull('shows/')
       setFetchedUserData(res)
     }
 

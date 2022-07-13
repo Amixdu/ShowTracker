@@ -27,7 +27,8 @@ export default function MainPage() {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await pull(currentUser.uid, 'users/')
+      const path = 'users/' + currentUser.uid
+      const res = await pull(path)
       setFetchedUserData(res)
     }
 
@@ -44,7 +45,7 @@ export default function MainPage() {
           <h5 className="text-center mb-4">{currentUser.email + (fetchedUserData?.isAdmin ? " (admin)" : "")}</h5>
           <Link to="/list" className='btn btn-primary w-100 mb-2'>My List</Link>
           {fetchedUserData?.isAdmin && 
-          <Link to="/admin" className='btn btn-primary w-100 mb-2'>Add/Update Shows</Link>
+          <Link to="/admin" className='btn btn-primary w-100 mb-2'>Add/Update Shows (Admin Option)</Link>
           }
         </Card.Body>
       </Card>

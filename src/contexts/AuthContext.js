@@ -88,10 +88,10 @@ export default function AuthProvider({ children }) {
     })
   }
 
-  async function pull(id, root){
+  async function pull(path){
     const dbRef = ref(getDatabase())
     // const root = isUsers ? 'users/' : 'shows/'
-    const res = await get(child(dbRef, root + id)).then((snapshot) => {
+    const res = await get(child(dbRef, path)).then((snapshot) => {
       if (snapshot.exists()){
         // setPulledData(snapshot.val())
         return (snapshot.val())

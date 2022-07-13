@@ -83,7 +83,7 @@ export default function UserAdd() {
 
     useEffect(() => {
         const fetch = async () => {
-        const res = await pull('', 'shows/')
+        const res = await pull('shows/')
         setFetchedUserData(res)
         }
 
