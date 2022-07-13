@@ -78,7 +78,7 @@ export default function Signup() {
 
             <br></br>
 
-            <Button disbaled={loading} className='w-100' type="submit">
+            <Button disabled={loading} className='w-100' type="submit">
               Sign up
             </Button>
 

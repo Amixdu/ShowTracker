@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { auth, storage } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 import { ref as sRef, uploadBytes,getDownloadURL } from "firebase/storage";
 
 const AuthContext = React.createContext()
@@ -51,15 +51,33 @@ export default function AuthProvider({ children }) {
     })
   }
 
-  async function pushShow(showId, showName, showAuthor, showDesc, showDate, showImageUrl){
+  async function pushShow(showId, newShow, showName, showAuthor, showDesc, showDate, showImageUrl){
     const db = getDatabase()
-    await set(ref(db, 'shows/' + showId), {
-      name: showName,
-      description: showDesc,
-      author: showAuthor,
-      date: showDate,
-      url: showImageUrl
-    })
+
+    if (!newShow){
+      await set(ref(db, 'shows/' + showId), {
+        name: showName,
+        description: showDesc,
+        author: showAuthor,
+        date: showDate,
+        url: showImageUrl
+      })
+    }
+    else{
+      const testP = {
+        name: showName,
+        description: showDesc,
+        author: showAuthor,
+        date: showDate,
+        url: showImageUrl
+      }
+      push(ref(db, 'shows/'), testP)
+    }
+    
+
+    
+
+
   }
 
   async function pull(id, root){

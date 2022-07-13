@@ -65,7 +65,7 @@ export default function Login() {
 
             <br></br>
 
-            <Button disbaled={loading} className='w-100' type="submit">
+            <Button disabled={loading} className='w-100' type="submit">
               Login
             </Button>
 

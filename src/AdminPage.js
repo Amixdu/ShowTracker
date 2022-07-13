@@ -50,10 +50,10 @@ export default function AdminPage() {
     try{
         const file = imageRef.current.files[0]
         if (file) {
-          await pushShow(clickedShowId, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+          await pushShow(clickedShowId, false, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
         }
         else{
-          await pushShow(clickedShowId, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
+          await pushShow(clickedShowId, false, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
         }
         
         console.log('URL saved')
@@ -161,7 +161,7 @@ export default function AdminPage() {
                 <Form.Control type='file' accept="image/png, image/jpeg" ref={imageRef} ></Form.Control>
               </Form.Group>
 
-              <Button disbaled={`${loading}`} className='w-100' type="submit">
+              <Button disabled={loading} className='w-100' type="submit">
                 Save Changes
               </Button>
 

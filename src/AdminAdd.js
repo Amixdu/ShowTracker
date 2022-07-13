@@ -29,16 +29,16 @@ export default function AdminAdd() {
     setSuccess(false)
     setLoading(true)
     
-    const rand = Math.floor((Math.random() * 100) + 1)
-    const id = (nameRef.current.value + authorRef.current.value + dateRef.current.value + rand).split(" ").join("")
+    // const rand = Math.floor((Math.random() * 100) + 1)
+    // const id = (nameRef.current.value + authorRef.current.value + dateRef.current.value + rand).split(" ").join("")
 
     try{
         const file = imageRef.current.files[0]
         setImageUrl(await uploadImage(file))
-        await pushShow(id, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+        await pushShow('', true, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
         console.log('URL saved')
-        setLoading(false)
         setSuccess(true)
+        setLoading(false)
     }
     catch(error){
         console.log(error)
@@ -85,7 +85,7 @@ export default function AdminAdd() {
               <Form.Control type='file' accept="image/png, image/jpeg" ref={imageRef} required ></Form.Control>
             </Form.Group>
 
-            <Button disbaled={loading} className='w-100' type="submit">
+            <Button disabled={loading} className='w-100' type="submit">
               Add
             </Button>
 
