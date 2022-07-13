@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Button, Table } from 'react-bootstrap'
@@ -30,6 +30,8 @@ export default function UserAdd() {
     const descriptionRef = useRef()
     const dateRef = useRef()
     const imageRef = useRef()
+
+    const history = useHistory()
 
     const { pull, pushShow, uploadImage, currentUser, pushShowToList } = useAuth()
 
@@ -78,8 +80,8 @@ export default function UserAdd() {
 
         // console.log(currentUser.uid)
         // setLoading(false)
-
     }
+
 
     useEffect(() => {
         const fetch = async () => {
@@ -95,7 +97,9 @@ export default function UserAdd() {
         {success && <Alert style={{ textAlign:"center" }}> Your list has been successfully updated!</Alert>}
         <div className='box'>
             <div className='buttonRight'>
-                <Link to="/list" className='btn btn-primary'>Go Back</Link>
+                <Button onClick={() => history.goBack()}>Go Back</Button>
+                {'  '}
+                <Link to="/list" className='btn btn-primary'>My List</Link>
             </div>
         </div>  
 

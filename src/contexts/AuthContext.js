@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { auth, storage } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue, push, remove } from "firebase/database";
 import { ref as sRef, uploadBytes,getDownloadURL } from "firebase/storage";
 
 const AuthContext = React.createContext()
@@ -132,6 +132,11 @@ export default function AuthProvider({ children }) {
   //   return res
   // }
 
+  async function deleteData(path){
+    const db = getDatabase()
+    await remove(ref(db, path))
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
@@ -165,7 +170,8 @@ export default function AuthProvider({ children }) {
     pulledData,
     uploadImage,
     pushShow,
-    pushShowToList
+    pushShowToList,
+    deleteData
   }
 
   // The !loading waits until currentUser is set (loading is set to false once everything is saved)

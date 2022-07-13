@@ -44,6 +44,7 @@ export default function MainPage() {
           <h2 className="text-center mb-4">Profile</h2>
           <h5 className="text-center mb-4">{currentUser.email + (fetchedUserData?.isAdmin ? " (admin)" : "")}</h5>
           <Link to="/list" className='btn btn-primary w-100 mb-2'>My List</Link>
+          <Link to="/browse-shows" className='btn btn-primary w-100 mb-2'>Browse Shows</Link>
           {fetchedUserData?.isAdmin && 
           <Link to="/admin" className='btn btn-primary w-100 mb-2'>Add/Update Shows (Admin Option)</Link>
           }
