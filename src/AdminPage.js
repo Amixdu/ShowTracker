@@ -83,7 +83,7 @@ export default function AdminPage() {
   
   return (
     <>
-      {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>}
+      {/* {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>} */}
       <div className='box'>
           <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
           <div className='buttonRight'>
