@@ -51,11 +51,11 @@ export default function AuthProvider({ children }) {
     })
   }
 
-  async function pushShow(showId, newShow, showName, showAuthor, showDesc, showDate, showImageUrl){
+  async function pushShow(showId, newShow, path, showName, showAuthor, showDesc, showDate, showImageUrl){
     const db = getDatabase()
 
     if (!newShow){
-      await set(ref(db, 'shows/' + showId), {
+      await set(ref(db, path), {
         name: showName,
         description: showDesc,
         author: showAuthor,
@@ -71,7 +71,7 @@ export default function AuthProvider({ children }) {
         date: showDate,
         url: showImageUrl
       }
-      push(ref(db, 'shows/'), testP)
+      push(ref(db, path), testP)
     }
     
 

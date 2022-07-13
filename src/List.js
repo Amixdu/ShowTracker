@@ -50,10 +50,10 @@ export default function List() {
     try{
         const file = imageRef.current.files[0]
         if (file) {
-          await pushShow(clickedShowId, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+          await pushShow(clickedShowId, false, 'shows/', nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
         }
         else{
-          await pushShow(clickedShowId, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
+          await pushShow(clickedShowId, false, 'shows/', nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
         }
         
         console.log('URL saved')
@@ -84,7 +84,7 @@ export default function List() {
           <div className='buttonRight'>
               <Link to="/home" className='btn btn-primary'>Go Back</Link>
               {'  '}
-              <Link to="/admin-add" className='btn btn-primary'>Add Shows</Link>
+              <Link to="/browse-shows" className='btn btn-primary'>Browse Shows</Link>
           </div>
       </div>  
 
@@ -98,7 +98,7 @@ export default function List() {
               <th>Creator</th>
               <th>Description</th>
               <th>Air Date</th>
-              <th>Update</th>
+              <th></th>
             </tr>
           </thead>
 
@@ -118,7 +118,7 @@ export default function List() {
                     <td>{value.description}</td>
                     <td width="250">{value.date}</td>
                     <td width="150">
-                      <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)}>Update</Button>
+                      <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} variant='danger'>Remove</Button>
                     </td>
                   </tr>
                 )
@@ -161,7 +161,7 @@ export default function List() {
                 <Form.Control type='file' accept="image/png, image/jpeg" ref={imageRef} ></Form.Control>
               </Form.Group>
 
-              <Button disbaled={`${loading}`} className='w-100' type="submit">
+              <Button disabled={loading} className='w-100' type="submit">
                 Save Changes
               </Button>
 

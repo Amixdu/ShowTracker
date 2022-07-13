@@ -35,7 +35,7 @@ export default function AdminAdd() {
     try{
         const file = imageRef.current.files[0]
         setImageUrl(await uploadImage(file))
-        await pushShow('', true, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+        await pushShow('', true, 'shows/', nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
         console.log('URL saved')
         setSuccess(true)
         setLoading(false)

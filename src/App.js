@@ -13,7 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import AdminUpdate from './AdminUpdate';
 import AdminAdd from './AdminAdd';
 import AdminPage from './AdminPage';
-
+import UserAdd from './UserAdd';
 
 function App() {
 
@@ -44,6 +44,8 @@ function App() {
 
               <PrivateRoute path="/list" component={List} />
 
+              <PrivateRoute path="/browse-shows" component={UserAdd} />
+
               <Route path="/admin" component={AdminPage} />
 
 
@@ -69,6 +71,7 @@ function App() {
                     <Route path="/admin-update" component={AdminUpdate} />
 
                     <Route path="/admin-add" component={AdminAdd} />
+
 
 
 
