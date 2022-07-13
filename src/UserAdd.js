@@ -9,7 +9,8 @@ import Loader from './Loader'
 
 
 export default function UserAdd() {
-    const [fetchedUserData, setFetchedUserData] = useState()
+    const [fetchedShowData, setFetchedShowData] = useState()
+    const [fetchedUserListData, setFetchedUserListData] = useState()
     const [loading, setLoading] = useState()
     const [showModal, setShowModal] = useState()
     const [clickedShowId, setClickedShowId] = useState()
@@ -20,6 +21,7 @@ export default function UserAdd() {
     const [clickedShowDescription, setClickedShowDescription] = useState()
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
+    const [alreadyInList, setAlreadyInList] = useState([])
 
     const [statusSelect, setStatusSelect] = useState("Watching")
     const [rateSelect, setRateSelect] = useState("N/A")
@@ -44,6 +46,8 @@ export default function UserAdd() {
         setClickedShowDescription(description)
         setClickedShowUrl(url)
         setShowModal(true)
+        // console.log(alreadyInList)
+
         // console.log(id)
     }
 
@@ -86,12 +90,30 @@ export default function UserAdd() {
 
 
     useEffect(() => {
-        const fetch = async () => {
-        const res = await pull('shows/')
-        setFetchedUserData(res)
+        const fetchShowData = async () => {
+            const res = await pull('shows/')
+            setFetchedShowData(res)
         }
 
-        fetch()
+        const fetchUserListData = async () => {
+            const path = 'users/' + currentUser.uid + '/list/'
+            const res = await pull(path)
+            setFetchedUserListData(res)
+            console.log(res)
+            Object.entries(res).map((entry) => {
+                const [key, value] = entry
+                // console.log(key)
+                setAlreadyInList(prev => {
+                    // console.log(alreadyInList.includes(key))
+                    // console.log(alreadyInList)
+                    return [... prev, key]
+                })
+            })
+        }
+
+        fetchShowData()
+        fetchUserListData()
+
     }, [])
     
     return (
@@ -105,42 +127,44 @@ export default function UserAdd() {
             </div>
         </div>  
 
-        {fetchedUserData ? 
+        {fetchedShowData ? 
         <div className='mt-5'>
             <Table striped bordered hover>
-            <thead>
-                <tr>
-                {/* <th>Img</th> */}
-                <th>Name</th>
-                <th>Creator</th>
-                <th>Description</th>
-                <th>Air Date</th>
-                <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {Object.entries(fetchedUserData).map((entry) => {
-                    const [key, value] = entry
-                    // console.log(value)
-                    return (
-                    <tr key={key}>
-                        <td width="300">
-                        <img width="250" height="150" src={value.url} />
-                        <br />
-                        {value.name}
-                        </td>
-                        {/* <td></td> */}
-                        <td width="250">{value.author}</td>
-                        <td>{value.description}</td>
-                        <td width="250">{value.date}</td>
-                        <td width="150">
-                        <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} >Add to list</Button>
-                        </td>
+                <thead>
+                    <tr>
+                    {/* <th>Img</th> */}
+                    <th>Name</th>
+                    <th>Creator</th>
+                    <th>Description</th>
+                    <th>Air Date</th>
+                    <th></th>
                     </tr>
-                    )
-                })}
-            </tbody>
+                </thead>
+
+                <tbody>
+                    {Object.entries(fetchedShowData).map((entry) => {
+                        const [key, value] = entry
+                        // console.log(value)
+                        const exists = alreadyInList.includes(key)
+                        const buttonName = exists ? "Already Added" : "Add to list"
+                        return (
+                        <tr key={key}>
+                            <td width="300">
+                            <img width="250" height="150" src={value.url} />
+                            <br />
+                            {value.name}
+                            </td>
+                            {/* <td></td> */}
+                            <td width="250">{value.author}</td>
+                            <td>{value.description}</td>
+                            <td width="250">{value.date}</td>
+                            <td width="150">
+                            <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} disabled={exists}>{buttonName}</Button>
+                            </td>
+                        </tr>
+                        )
+                    })}
+                </tbody>
             </Table>
 
             <Modal show={showModal} onHide={handleClose}>
