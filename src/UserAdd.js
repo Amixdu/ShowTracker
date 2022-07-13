@@ -22,7 +22,7 @@ export default function UserAdd() {
     const [success, setSuccess] = useState(false)
 
     const [statusSelect, setStatusSelect] = useState("Watching")
-    const [rateSelect, setRateSelect] = useState("1 (Very Bad)")
+    const [rateSelect, setRateSelect] = useState("N/A")
     
 
     const nameRef = useRef()
@@ -47,9 +47,9 @@ export default function UserAdd() {
         // console.log(id)
     }
 
-    // The handle change function for the rate select is done on the compnonet itself (another way to do it)
-    const handleStatusOnChange = (e) => {
-        setStatusSelect(e.target.value)
+    // The handle change function for the status select is done on the component itself (another way to do it)
+    const handleRatingOnChange = (e) => {
+        setRateSelect(e.target.value)
     }
 
     async function handleSubmit(e){
@@ -58,9 +58,11 @@ export default function UserAdd() {
         setSuccess(false)
         setLoading(true)
 
+        
+
         try{
             const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
-            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, statusSelect, rateSelect)
+            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, statusSelect, statusSelect == "Plan To Watch" ? "N/A" : rateSelect)
             
             console.log('Added to list')
             setLoading(false)
@@ -152,7 +154,7 @@ export default function UserAdd() {
                 <Form onSubmit={handleSubmit}>
 
                     <Form.Label>How much have you watched?</Form.Label>
-                    <Form.Select onChange={handleStatusOnChange} aria-label="Default select example" className='mb-3' value={statusSelect}>
+                    <Form.Select onChange={(e) => {setStatusSelect(e.target.value)}} aria-label="Default select example" className='mb-3' value={statusSelect}>
                         {/* <option></option> */}
                         <option value="Watching">Watching</option>
                         <option value="Completed">Completed</option>
@@ -160,8 +162,9 @@ export default function UserAdd() {
                     </Form.Select>
 
                     <Form.Label>How much would you rate the show?</Form.Label>
-                    <Form.Select onChange={(e) => {setRateSelect(e.target.value)}} aria-label="Default select example" value={rateSelect} >
+                    <Form.Select onChange={handleRatingOnChange} aria-label="Default select example" value={statusSelect !== "Plan To Watch" ? rateSelect : "N/A"} disabled={statusSelect === "Plan To Watch" ? true : false} >
                         {/* <option></option> */}
+                        <option value="N/A">N/A</option>
                         <option value="1 (Very Bad)">1 (Very Bad)</option>
                         <option value="2 (Bad)">2 (Bad)</option>
                         <option value="3 (It's Okay)">3 (It's Okay)</option>

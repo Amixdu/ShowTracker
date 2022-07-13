@@ -199,7 +199,7 @@ export default function List() {
                     </Form.Group>
 
                     <Form.Label>How much have you watched?</Form.Label>
-                    <Form.Select onChange={(e) => {setClickedStatus(e.target.value)}} aria-label="Default select example" className='mb-3' value={clickedStatus}>
+                    <Form.Select onChange={(e) => {setClickedStatus(e.target.value)}} aria-label="Default select example" className='mb-3' value={clickedStatus} >
                         {/* <option></option> */}
                         <option value="Watching">Watching</option>
                         <option value="Completed">Completed</option>
@@ -207,8 +207,8 @@ export default function List() {
                     </Form.Select>
 
                     <Form.Label>How much would you rate the show?</Form.Label>
-                    <Form.Select onChange={(e) => {setClickedRating(e.target.value)}} aria-label="Default select example" value={clickedRating} className='mb-3'>
-                        {/* <option></option> */}
+                    <Form.Select onChange={(e) => {setClickedRating(e.target.value)}} aria-label="Default select example" value={clickedRating} className='mb-3' disabled={clickedStatus === "Plan To Watch" ? true : false}>
+                        <option value="N/A">N/A</option>
                         <option value="1 (Very Bad)">1 (Very Bad)</option>
                         <option value="2 (Bad)">2 (Bad)</option>
                         <option value="3 (It's Okay)">3 (It's Okay)</option>
