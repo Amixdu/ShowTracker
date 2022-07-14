@@ -57,11 +57,26 @@ export default function AdminPage() {
     try{
         const file = imageRef.current.files[0]
         const path = 'shows/' + clickedShowId
+        const users = await pull('users/')
         if (file) {
           await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+
+          // Updating all the shows in the lists as well
+          Object.entries(users).map(async (entry) =>{
+            const [key, value] = entry
+            const userPath = 'users/' + key + '/list/' + clickedShowId
+            await pushShow(false, userPath, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+          })
         }
         else{
           await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
+
+          // Updating all the shows in the lists as well
+          Object.entries(users).map(async (entry) =>{
+            const [key, value] = entry
+            const userPath = 'users/' + key + '/list/' + clickedShowId
+            await pushShow(false, userPath, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
+          })
         }
         
         setLoading(false)
