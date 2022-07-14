@@ -180,7 +180,7 @@ export default function AdminPage() {
                 <p style={{ fontSize:'35px' }}> Database is empty </p>
                 <Link to="/home" className='btn btn-primary'>Go Back</Link>
                 {'  '}
-                <Link to="/browse-shows" className='btn btn-primary'>Add Shows</Link>
+                <Link to="/admin-add" className='btn btn-primary'>Add Shows</Link>
             </div>
           </Container>
       )

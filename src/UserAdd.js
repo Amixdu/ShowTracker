@@ -4,7 +4,7 @@ import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Button, Table } from 'react-bootstrap'
 import LoaderMiddle from './LoaderMiddle'
-import { Modal, Form, Alert } from 'react-bootstrap'
+import { Modal, Form, Alert, Container } from 'react-bootstrap'
 import Loader from './Loader'
 
 
@@ -80,7 +80,7 @@ export default function UserAdd() {
 
         const fetchShowData = async () => {
             const res = await pull('shows/')
-            setFetchedShowData(res)
+            setFetchedShowData(res ? res : 'Empty')
         }
 
         const fetchUserListData = async () => {
@@ -105,99 +105,115 @@ export default function UserAdd() {
     return (
         <>
         {/* {success && <Alert style={{ textAlign:"center" }}> Your list has been successfully updated!</Alert>} */}
-        <div className='box'>
-            <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
-            <div className='buttonRight'>
-                <Button onClick={() => history.goBack()}>Go Back</Button>
-                {'  '}
-                <Link to="/home" className='btn btn-primary'>Home</Link>
-                {'  '}
-                <Link to="/list" className='btn btn-primary'>My List</Link>
-                
-            </div>
-        </div>  
+        
 
         {fetchedShowData ? 
-        <div className='mt-4'>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                    {/* <th>Img</th> */}
-                    <th>Name</th>
-                    <th>Creator</th>
-                    <th>Description</th>
-                    <th>Air Date</th>
-                    <th></th>
-                    </tr>
-                </thead>
+            (fetchedShowData !== 'Empty' ? (
+                <>
+                    <div className='box'>
+                        <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
+                        <div className='buttonRight'>
+                            <Button onClick={() => history.goBack()}>Go Back</Button>
+                            {'  '}
+                            <Link to="/home" className='btn btn-primary'>Home</Link>
+                            {'  '}
+                            <Link to="/list" className='btn btn-primary'>My List</Link>
+                        </div>
+                    </div>  
 
-                <tbody>
-                    {Object.entries(fetchedShowData).map((entry) => {
-                        const [key, value] = entry
-                        // console.log(value)
-                        const exists = alreadyInList.includes(key)
-                        const buttonName = exists ? "Already Added" : "Add to list"
-                        return (
-                        <tr key={key}>
-                            <td width="300">
-                            <img width="250" height="150" src={value.url} />
-                            <br />
-                            {value.name}
-                            </td>
-                            {/* <td></td> */}
-                            <td width="250">{value.author}</td>
-                            <td>{value.description}</td>
-                            <td width="250">{value.date}</td>
-                            <td width="150">
-                            <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} disabled={exists}>{buttonName}</Button>
-                            </td>
-                        </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+                    <div className='mt-4'>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                {/* <th>Img</th> */}
+                                <th>Name</th>
+                                <th>Creator</th>
+                                <th>Description</th>
+                                <th>Air Date</th>
+                                <th></th>
+                                </tr>
+                            </thead>
 
-            <Modal show={showModal} onHide={handleClose}>
-            {loading && <Loader backgCol={'light'}/>}
-            <Modal.Header closeButton>
-                <Modal.Title> Add Show To List</Modal.Title>
-            </Modal.Header>
+                            <tbody>
+                                {Object.entries(fetchedShowData).map((entry) => {
+                                    const [key, value] = entry
+                                    // console.log(value)
+                                    const exists = alreadyInList.includes(key)
+                                    const buttonName = exists ? "Already Added" : "Add to list"
+                                    return (
+                                    <tr key={key}>
+                                        <td width="300">
+                                        <img width="250" height="150" src={value.url} />
+                                        <br />
+                                        {value.name}
+                                        </td>
+                                        {/* <td></td> */}
+                                        <td width="250">{value.author}</td>
+                                        <td>{value.description}</td>
+                                        <td width="250">{value.date}</td>
+                                        <td width="150">
+                                        <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} disabled={exists}>{buttonName}</Button>
+                                        </td>
+                                    </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </Table>
+                    </div> 
+                </>
+            ) 
+            : 
+            (<Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "95vh" }}>
+                <div>
+                    <p style={{ fontSize:'35px' }}> Nothing to show :( </p>
+                    <Button onClick={() => history.goBack()}>Go Back</Button>
+                </div>
+            </Container>)
+            ) : <LoaderMiddle />
+        }
 
-            <Modal.Body>
-                {error && <Alert variant='danger'>{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
+        <Modal show={showModal} onHide={handleClose}>
+        {loading && <Loader backgCol={'light'}/>}
+        <Modal.Header closeButton>
+            <Modal.Title> Add Show To List</Modal.Title>
+        </Modal.Header>
 
-                    <Form.Label>How much have you watched?</Form.Label>
-                    <Form.Select onChange={(e) => {setStatusSelect(e.target.value)}} aria-label="Default select example" className='mb-3' value={statusSelect}>
-                        {/* <option></option> */}
-                        <option value="Watching">Watching</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Plan To Watch">Plan To Watch</option>
-                    </Form.Select>
+        <Modal.Body>
+            {error && <Alert variant='danger'>{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
 
-                    <Form.Label>How much would you rate the show?</Form.Label>
-                    <Form.Select onChange={handleRatingOnChange} aria-label="Default select example" value={statusSelect !== "Plan To Watch" ? rateSelect : "N/A"} disabled={statusSelect === "Plan To Watch" ? true : false} >
-                        {/* <option></option> */}
-                        <option value="N/A">N/A</option>
-                        <option value="1 (Very Bad)">1 (Very Bad)</option>
-                        <option value="2 (Bad)">2 (Bad)</option>
-                        <option value="3 (It's Okay)">3 (It's Okay)</option>
-                        <option value="4 (Good)">4 (Good)</option>
-                        <option value="5 (Excellent)">5 (Excellent)</option>
-                    </Form.Select>
+                <Form.Label>How much have you watched?</Form.Label>
+                <Form.Select onChange={(e) => {setStatusSelect(e.target.value)}} aria-label="Default select example" className='mb-3' value={statusSelect}>
+                    {/* <option></option> */}
+                    <option value="Watching">Watching</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Plan To Watch">Plan To Watch</option>
+                </Form.Select>
 
-                    <br />
+                <Form.Label>How much would you rate the show?</Form.Label>
+                <Form.Select onChange={handleRatingOnChange} aria-label="Default select example" value={statusSelect !== "Plan To Watch" ? rateSelect : "N/A"} disabled={statusSelect === "Plan To Watch" ? true : false} >
+                    {/* <option></option> */}
+                    <option value="N/A">N/A</option>
+                    <option value="1 (Very Bad)">1 (Very Bad)</option>
+                    <option value="2 (Bad)">2 (Bad)</option>
+                    <option value="3 (It's Okay)">3 (It's Okay)</option>
+                    <option value="4 (Good)">4 (Good)</option>
+                    <option value="5 (Excellent)">5 (Excellent)</option>
+                </Form.Select>
 
-                    <Button disabled={loading} className='w-100' type="submit">
-                        Add To List
-                    </Button>
+                <br />
 
-                </Form>
-            </Modal.Body>
+                <Button disabled={loading} className='w-100' type="submit">
+                    Add To List
+                </Button>
 
-            </Modal>
+            </Form>
+        </Modal.Body>
 
-        </div> : <LoaderMiddle />}
+        </Modal>
+
+
+
         </>
     )
 }
