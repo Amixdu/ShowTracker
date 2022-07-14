@@ -46,7 +46,6 @@ export default function AdminPage() {
     setClickedShowDescription(description)
     setClickedShowUrl(url)
     setShowUpdateModal(true)
-    // console.log(id)
   }
 
   async function handleSubmit(e){
@@ -65,7 +64,6 @@ export default function AdminPage() {
           await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
         }
         
-        console.log('URL saved')
         setLoading(false)
         setSuccess(true)
         setShowUpdateModal(false)
@@ -85,11 +83,9 @@ export default function AdminPage() {
     try{
         const path = 'shows/' + clickedShowId
         await deleteData(path)
-        // console.log('Delete complete')
 
         // Deleting the show from all lists
         const res = await pull('users/')
-        // console.log(res)
         Object.entries(res).map(async (entry) =>{
           const [key, value] = entry
           await deleteData('users/' + key + '/list/' + clickedShowId)
@@ -100,7 +96,7 @@ export default function AdminPage() {
         setReload(!reload)
     }
     catch(error){
-        // console.log(error)
+        console.log(error)
         setError("Delete Failed")
         setLoading(false)
     }
@@ -119,7 +115,6 @@ export default function AdminPage() {
   return (
     <>
       {/* {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>} */}
-      
 
       {fetchedUserData ? 
       (fetchedUserData !== 'Empty' ? (
@@ -157,14 +152,12 @@ export default function AdminPage() {
                           <br />
                           {value.name}
                         </td>
-                        {/* <td></td> */}
                         <td width="250">{value.author}</td>
                         <td>{value.description}</td>
                         <td width="250">{value.date}</td>
                         <td width="150">
                           <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"75%" }} className='mb-2'>Update</Button>
                           <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%" }} className='mb-2'>Remove</Button>
-
                         </td>
                       </tr>
                     )

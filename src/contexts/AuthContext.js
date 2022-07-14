@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { auth, storage } from "../firebase"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { getDatabase, ref, set, get, child, onValue, push, remove } from "firebase/database";
+import { getDatabase, ref, set, get, child, push, remove } from "firebase/database";
 import { ref as sRef, uploadBytes,getDownloadURL } from "firebase/storage";
 
 const AuthContext = React.createContext()
@@ -22,7 +22,6 @@ export default function AuthProvider({ children }) {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // setCurrentUser(user)
         push_user(user.uid, email, false)
       })
       .catch((error) => {
@@ -53,7 +52,6 @@ export default function AuthProvider({ children }) {
 
   async function pushShow(newShow, path, showName, showAuthor, showDesc, showDate, showImageUrl){
     const db = getDatabase()
-
     if (!newShow){
       await set(ref(db, path), {
         name: showName,
@@ -90,14 +88,11 @@ export default function AuthProvider({ children }) {
 
   async function pull(path){
     const dbRef = ref(getDatabase())
-    // const root = isUsers ? 'users/' : 'shows/'
     const res = await get(child(dbRef, path)).then((snapshot) => {
       if (snapshot.exists()){
-        // setPulledData(snapshot.val())
         return (snapshot.val())
       }
       else{
-        // setPulledData('')
         return ('')
       }
     }).catch((error) => {
@@ -140,16 +135,6 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user)
-
-      // Everytime the users authentication state changes, data (from the realtime database) for the corresponding user is pulled and stored
-      // in addition to the user itself (from Firebase authentication)
-      // try{
-      //   await pull(user.uid, 'users/')
-      // }
-      // catch(error){
-      //   setPulledData('')
-      //   console.log(error)
-      // }
       
       // setLoading to false once required data is saved
       setLoading(false)
@@ -157,7 +142,6 @@ export default function AuthProvider({ children }) {
     return unsubscribe
   }, [])
   
-
 
   const value = {
     currentUser,

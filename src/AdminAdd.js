@@ -3,10 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Loader from './Loader'
-
 import { useAuth } from './contexts/AuthContext'
-// import { auth } from "./firebase"
-// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 export default function AdminAdd() {
@@ -15,26 +12,20 @@ export default function AdminAdd() {
   const descriptionRef = useRef()
   const dateRef = useRef()
   const imageRef = useRef()
+
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [imageUrl, setImageUrl] = useState()
 
-
-  const { uploadImage, currentUser, pushShow } = useAuth()
+  const { uploadImage, pushShow } = useAuth()
   
   async function handleSubmit(e){
     e.preventDefault()
     setError('')
     setSuccess(false)
     setLoading(true)
-    
-    // const rand = Math.floor((Math.random() * 100) + 1)
-    // const id = (nameRef.current.value + authorRef.current.value + dateRef.current.value + rand).split(" ").join("")
-
     try{
         const file = imageRef.current.files[0]
-        setImageUrl(await uploadImage(file))
         await pushShow(true, 'shows/', nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
         console.log('URL saved')
         setSuccess(true)

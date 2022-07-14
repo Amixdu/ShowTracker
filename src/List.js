@@ -95,7 +95,7 @@ export default function List() {
     }, [reload])
     
     return (
-        <>
+        <div style={{ backgroundColor:'#121212', minHeight: "100vh" }}>
             {/* {success && <Alert style={{ textAlign:"center" }}> List updated successfully. Please reload to see the changes</Alert>} */}
             {fetchedUserData ? 
                 (fetchedUserData !== 'Empty' ? (
@@ -158,7 +158,7 @@ export default function List() {
                 : 
                 (<Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "95vh" }}>
                     <div>
-                        <p style={{ fontSize:'35px' }}> List is empty </p>
+                        <p style={{ fontSize:'35px', color:'white' }}> List is empty </p>
                         <Button onClick={() => history.goBack()}>Go Back</Button>
                         {'  '}
                         <Link to="/browse-shows" className='btn btn-primary'>Add Shows</Link>
@@ -217,6 +217,6 @@ export default function List() {
                     </Form>
                 </Modal.Body>
             </Modal>
-        </>
+        </div>
     )
 }

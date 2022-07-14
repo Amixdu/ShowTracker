@@ -1,11 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Form, Button, Card } from 'react-bootstrap'
-import { Link, useHistory } from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
-// import { auth } from "./firebase"
-// import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 export default function ForgotPassword() {
@@ -19,8 +16,6 @@ export default function ForgotPassword() {
   async function handleSubmit(e){
     e.preventDefault()
     setError('')
-
-    // If checks passed, signup
 
     try{
       setLoading(true)
@@ -40,16 +35,14 @@ export default function ForgotPassword() {
   return (
     <>
       <div>
-
         {loading && 'Loading ...'}
         <Card>
           <Card.Body>
             <h2 className="text-center mb-4">Password Reset</h2>
-            {/* {auth.currentUser.email} */}
+            
             {success? <Alert>Reset instructions has been sent to your Email</Alert> : error && <Alert variant='danger'>{error}</Alert>}
 
             <Form onSubmit={handleSubmit}>
-
               <Form.Group id="email">
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" ref={emailRef} required></Form.Control>
@@ -60,11 +53,12 @@ export default function ForgotPassword() {
               <Button disbaled={loading} className='w-100' type="submit">
                 Reset Password
               </Button>
-
             </Form>
+
             <div className="w-100 text-center mt-3">
               <Link to="/login"> Login </Link>
             </div>
+
           </Card.Body>
         </Card>
 
@@ -74,6 +68,5 @@ export default function ForgotPassword() {
 
       </div>
     </>
-    
   )
 }

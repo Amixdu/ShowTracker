@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Button, Card, Alert } from 'react-bootstrap'
 import Loader from './Loader'
-
 import { useAuth } from './contexts/AuthContext'
 
 export default function MainPage() {
@@ -54,7 +53,6 @@ export default function MainPage() {
       <div className="w-100 text-center mt-2">
         <Button onClick={handleLogout} style={{ backgroundColor:'white', color:'black' }}>Logout</Button>
       </div>
-        
     </>
   )
 }

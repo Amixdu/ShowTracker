@@ -3,11 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import Loader from './Loader'
-
-
 import { useAuth } from './contexts/AuthContext'
-// import { auth } from "./firebase"
-// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 export default function Signup() {
@@ -29,15 +25,11 @@ export default function Signup() {
 
     setError('')
 
-    // console.log(emailRef.current.value)
-    // console.log(passwordRef.current.value)
-
     // If checks passed, signup
 
     try{
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-      console.log('Signup Success')
       history.push("/home")
     }
     catch(error){
@@ -53,10 +45,11 @@ export default function Signup() {
     <div>
 
       {loading && <Loader backgCol={'light'}/>}
+
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Signup Page</h2>
-          {/* {currentUser.email} */}
+          
           {error && <Alert variant='danger'>{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>

@@ -21,21 +21,29 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="App">
+        <div className="App" style={{ minHeight: "100vh" }}>
             {/* Enter Nav Bar outside of Switch */}
             <Switch>
 
               <Route exact path="/">
                 <MainPage />
               </Route>
+              
 
-              <PrivateRoute path="/list" component={List} />
 
               <PrivateRoute path="/browse-shows" component={UserAdd} />
 
               <PrivateAdminRoute path="/admin" component={AdminPage} />
 
-              <div style={{ backgroundColor:'#1569C7'}}>
+              <PrivateRoute path="/list" component={List} />
+
+
+            
+              {/* <div style={{ backgroundColor:'#121212', minHeight: "100vh" }}> */}
+
+              {/* </div> */}
+
+              <div style={{ backgroundColor:'#1569C7' }}>
 
                 <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh" }}>
                   <div className='w-100' style={{ maxWidth: '400px' }}>
@@ -61,6 +69,7 @@ function App() {
                   </div>
                 </Container>
               </div>
+              
             </Switch>
         </div>
       </AuthProvider>

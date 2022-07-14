@@ -5,8 +5,6 @@ import { Link, useHistory } from 'react-router-dom'
 import Loader from './Loader'
 
 import { useAuth } from './contexts/AuthContext'
-// import { auth } from "./firebase"
-// import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 export default function Login() {
@@ -23,12 +21,9 @@ export default function Login() {
     e.preventDefault()
     setError('')
 
-    // If checks passed, signup
-
     try{
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      console.log("Success")
       setSuccess(true)
       history.push("/home")
     }
@@ -43,8 +38,8 @@ export default function Login() {
 
   return (
     <>
-
       {loading && <Loader backgCol={'light'}/>}
+
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Login Page</h2>
@@ -52,7 +47,6 @@ export default function Login() {
           {success? <Alert>Success</Alert> : error && <Alert variant='danger'>{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
-
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required></Form.Control>
@@ -68,19 +62,18 @@ export default function Login() {
             <Button disabled={loading} className='w-100' type="submit">
               Login
             </Button>
-
           </Form>
+          
           <div className="w-100 text-center mt-3">
             <Link to="/forgot-password"> Forgot Password? </Link>
           </div>
+
         </Card.Body>
       </Card>
 
       <div className="w-100 text-center mt-2" style={{ color:'white' }}>
         Don't have an account? <Link to="/signup" style={{ color:'white' }}> Signup </Link>
       </div>
-
     </>
-    
   )
 }
