@@ -14,28 +14,15 @@ import AdminUpdate from './AdminUpdate';
 import AdminAdd from './AdminAdd';
 import AdminPage from './AdminPage';
 import UserAdd from './UserAdd';
+import PrivateAdminRoute from './PrivateAdminRoute';
 
 function App() {
-
-
-  let randomId = () => {
-    let s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  }
-
-  
 
   return (
     <Router>
       <AuthProvider>
         <div className="App">
-
             {/* Enter Nav Bar outside of Switch */}
-
             <Switch>
 
               <Route exact path="/">
@@ -46,8 +33,7 @@ function App() {
 
               <PrivateRoute path="/browse-shows" component={UserAdd} />
 
-              <Route path="/admin" component={AdminPage} />
-
+              <PrivateAdminRoute path="/admin" component={AdminPage} />
 
               <div style={{ backgroundColor:'#1569C7'}}>
 
@@ -68,25 +54,17 @@ function App() {
                       <ForgotPassword />
                     </Route>
 
-                    <Route path="/admin-update" component={AdminUpdate} />
+                    <PrivateAdminRoute path="/admin-update" component={AdminUpdate} />
 
-                    <Route path="/admin-add" component={AdminAdd} />
-
-
-
+                    <PrivateAdminRoute path="/admin-add" component={AdminAdd} />
 
                   </div>
-
                 </Container>
-
               </div>
-
             </Switch>
-
         </div>
       </AuthProvider>
     </Router>
-    
   );
 }
 
