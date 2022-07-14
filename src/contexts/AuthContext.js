@@ -17,16 +17,15 @@ export default function AuthProvider({ children }) {
   const [pulledData, setPulledData] = useState()
   const [downloadUrl, setDownloadUrl] = useState()
   
-  // Push email and isAdmin when creating a new account
   async function signup(email, password){
     await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        push_user(user.uid, email, false)
-      })
-      .catch((error) => {
-        console.log(error.message)
-      });
+      // .then((userCredential) => {
+      //   const user = userCredential.user;
+      //   push_user(user.uid, email, false)
+      // })
+      // .catch((error) => {
+      //   console.log(error.message)
+      // });
     return 
   }
 
@@ -151,7 +150,6 @@ export default function AuthProvider({ children }) {
     resetPassword,
     push_user,
     pull,
-    pulledData,
     uploadImage,
     pushShow,
     pushShowToList,

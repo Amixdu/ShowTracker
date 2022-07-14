@@ -3,14 +3,16 @@ import { Redirect, Route } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
 
 export default function PrivateAdminRoute( { component: Component, ...rest }) {
-    const [fetchedUserData, setFetchedUserData] = useState()
+    const [isAdmin, setIsAdmin] = useState()
     const { currentUser, pull } = useAuth()
+    const [dataFetched, setDataFetched] = useState()
 
     useEffect(() => {
         const fetch = async () => {
-            const path = 'users/' + currentUser.uid
+            const path = 'admins/'
             const res = await pull(path)
-            setFetchedUserData(res)
+            setDataFetched(true)
+            setIsAdmin(res.includes(currentUser.uid))      
         }
         fetch()
     }, [])
@@ -19,11 +21,11 @@ export default function PrivateAdminRoute( { component: Component, ...rest }) {
     return (      
         <>
             {
-                fetchedUserData ? 
+                dataFetched ?
                 <Route 
                     {...rest}
                     render={props => {
-                        return (currentUser && fetchedUserData.isAdmin) ? <Component {...props} /> : <Redirect to='/' />
+                        return (currentUser && isAdmin) ? <Component {...props} /> : <Redirect to='/' />
                     }}>
                 </Route>
                 :

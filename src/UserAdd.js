@@ -162,7 +162,7 @@ export default function UserAdd() {
                         <Button onClick={() => history.goBack()}>Go Back</Button>
                     </div>
                 </Container>)
-                ) : <LoaderMiddle />
+                ) : <LoaderMiddle col='primary'/>
             }
 
             <Modal show={showModal} onHide={handleClose}>

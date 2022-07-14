@@ -164,7 +164,7 @@ export default function List() {
                         <Link to="/browse-shows" className='btn btn-primary'>Add Shows</Link>
                     </div>
                 </Container>)
-                ) : <LoaderMiddle />
+                ) : <LoaderMiddle col='primary'/>
             }   
 
             <Modal show={showRemoveModal} onHide={handleRemoveModalClose}>

@@ -179,7 +179,7 @@ export default function AdminPage() {
       )
       )
       
-      : <LoaderMiddle />}
+      : <LoaderMiddle col='primary'/>}
 
       <Modal show={showUpdateModal} onHide={handleUpdateModalClose}>
           {loading && <Loader backgCol={'light'}/>}
