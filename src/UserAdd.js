@@ -109,9 +109,9 @@ export default function UserAdd() {
 
         {fetchedShowData ? 
             (fetchedShowData !== 'Empty' ? (
-                <>
+                <div style={{ backgroundColor:'#121212', overflow:'auto' }}>
                     <div className='box'>
-                        <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows</h2>
+                        <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif", color:"white" }}>All Shows</h2>
                         <div className='buttonRight'>
                             <Button onClick={() => history.goBack()}>Go Back</Button>
                             {'  '}
@@ -122,7 +122,7 @@ export default function UserAdd() {
                     </div>  
 
                     <div className='mt-4'>
-                        <Table striped bordered hover>
+                        <Table striped bordered hover variant="dark">
                             <thead>
                                 <tr>
                                 {/* <th>Img</th> */}
@@ -160,7 +160,7 @@ export default function UserAdd() {
                             </tbody>
                         </Table>
                     </div> 
-                </>
+                </div>
             ) 
             : 
             (<Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "95vh" }}>
