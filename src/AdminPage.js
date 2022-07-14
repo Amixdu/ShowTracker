@@ -4,7 +4,7 @@ import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Button, Table } from 'react-bootstrap'
 import LoaderMiddle from './LoaderMiddle'
-import { Modal, Form, Alert } from 'react-bootstrap'
+import { Modal, Form, Alert, Container } from 'react-bootstrap'
 import Loader from './Loader'
 
 
@@ -110,7 +110,7 @@ export default function AdminPage() {
     setFetchedUserData('')
     const fetch = async () => {
       const res = await pull('shows/')
-      setFetchedUserData(res)
+      setFetchedUserData(res ? res : 'Empty')
     }
 
     fetch()
@@ -119,56 +119,74 @@ export default function AdminPage() {
   return (
     <>
       {/* {success && <Alert style={{ textAlign:"center" }}> Update successful. Please reload to see the changes</Alert>} */}
-      <div className='box'>
-          <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows (Admin Access)</h2>
-          <div className='buttonRight'>
-              <Link to="/home" className='btn btn-primary'>Go Back</Link>
-              {'  '}
-              <Link to="/admin-add" className='btn btn-primary'>Add Shows</Link>
-          </div>
-      </div>  
+      
 
       {fetchedUserData ? 
-      <div className='mt-4'>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              {/* <th>Img</th> */}
-              <th>Name</th>
-              <th>Creator</th>
-              <th>Description</th>
-              <th>Air Date</th>
-              <th>Update</th>
-            </tr>
-          </thead>
+      (fetchedUserData !== 'Empty' ? (
+        <>
+          <div className='box'>
+              <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows (Admin Access)</h2>
+              <div className='buttonRight'>
+                  <Link to="/home" className='btn btn-primary'>Go Back</Link>
+                  {'  '}
+                  <Link to="/admin-add" className='btn btn-primary'>Add Shows</Link>
+              </div>
+          </div>  
 
-          <tbody>
-            {Object.entries(fetchedUserData).map((entry) => {
-                const [key, value] = entry
-                // console.log(value)
-                return (
-                  <tr key={key}>
-                    <td width="300">
-                      <img width="250" height="150" src={value.url} />
-                      <br />
-                      {value.name}
-                    </td>
-                    {/* <td></td> */}
-                    <td width="250">{value.author}</td>
-                    <td>{value.description}</td>
-                    <td width="250">{value.date}</td>
-                    <td width="150">
-                      <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"75%" }} className='mb-2'>Update</Button>
-                      <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%" }} className='mb-2'>Remove</Button>
+          <div className='mt-4'>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  {/* <th>Img</th> */}
+                  <th>Name</th>
+                  <th>Creator</th>
+                  <th>Description</th>
+                  <th>Air Date</th>
+                  <th>Update</th>
+                </tr>
+              </thead>
 
-                    </td>
-                  </tr>
-                )
-            })}
-          </tbody>
-        </Table>
+              <tbody>
+                {Object.entries(fetchedUserData).map((entry) => {
+                    const [key, value] = entry
+                    // console.log(value)
+                    return (
+                      <tr key={key}>
+                        <td width="300">
+                          <img width="250" height="150" src={value.url} />
+                          <br />
+                          {value.name}
+                        </td>
+                        {/* <td></td> */}
+                        <td width="250">{value.author}</td>
+                        <td>{value.description}</td>
+                        <td width="250">{value.date}</td>
+                        <td width="150">
+                          <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"75%" }} className='mb-2'>Update</Button>
+                          <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%" }} className='mb-2'>Remove</Button>
 
-      </div> : <LoaderMiddle />}
+                        </td>
+                      </tr>
+                    )
+                })}
+              </tbody>
+            </Table>
+          </div> 
+        </>
+      ) : 
+      (
+        <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "95vh" }}>
+            <div>
+                <p style={{ fontSize:'35px' }}> Database is empty </p>
+                <Link to="/home" className='btn btn-primary'>Go Back</Link>
+                {'  '}
+                <Link to="/browse-shows" className='btn btn-primary'>Add Shows</Link>
+            </div>
+          </Container>
+      )
+      )
+      
+      : <LoaderMiddle />}
 
       <Modal show={showUpdateModal} onHide={handleUpdateModalClose}>
           {loading && <Loader backgCol={'light'}/>}

@@ -164,7 +164,7 @@ export default function List() {
             (<Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "95vh" }}>
                 <div>
                     <p style={{ fontSize:'35px' }}> List is empty </p>
-                    <Link to="/home" className='btn btn-primary'>Go Back</Link>
+                    <Button onClick={() => history.goBack()}>Go Back</Button>
                     {'  '}
                     <Link to="/browse-shows" className='btn btn-primary'>Add Shows</Link>
                 </div>
