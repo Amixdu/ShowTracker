@@ -71,7 +71,6 @@ export default function List() {
         try{
             const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
             await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, clickedStatus, clickedStatus == "Plan To Watch" ? "N/A" : clickedRating)
-            console.log("List Update Success")
             setLoading(false)
             setShowUpdateModal(false)
             setReload(!reload)
@@ -144,8 +143,8 @@ export default function List() {
                                             <td width="200">{value.status}</td>
                                             <td width="200">{value.rating}</td>
                                             <td width="125">
-                                                <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"85%" }} className='mb-2'>Update</Button>
-                                                <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"85%" }} className='mb-2'>Remove</Button>
+                                                <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"90%" }} className='mb-2'>Update</Button>
+                                                <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"90%" }} className='mb-2'>Remove</Button>
                                             </td>
                                         </tr>
                                         )

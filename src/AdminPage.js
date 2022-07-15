@@ -260,7 +260,7 @@ export default function AdminPage() {
       <Modal show={showRemoveModal} onHide={handleRemoveModalClose}>
           {loading && <Loader backgCol={'light'}/>}
           <Modal.Header closeButton>
-              <Modal.Title style={{ textAlign:"center" }}> Note: This action will remove this show from the database. Are you sure you want to continue?</Modal.Title>
+              <Modal.Title style={{ textAlign:"center" }}> This action will remove this show from the database. Are you sure you want to continue?</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
