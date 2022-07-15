@@ -29,7 +29,7 @@ export default function AdminPage() {
   const dateRef = useRef()
   const imageRef = useRef()
 
-  const { pull, pushShow, uploadImage, deleteData } = useAuth()
+  const { pull, pushShow, uploadImage, deleteData, pushShowToList } = useAuth()
 
   const handleRemoveModalClose = () => setShowRemoveModal(false);
     const handleRemoveModalShow = (id) => {
@@ -53,30 +53,47 @@ export default function AdminPage() {
     setError('')
     setSuccess(false)
     setLoading(true)
+
+    const name = nameRef.current.value
+    const author = authorRef.current.value
+    const description = descriptionRef.current.value
+    const date = dateRef.current.value
     
     try{
         const file = imageRef.current.files[0]
         const path = 'shows/' + clickedShowId
         const users = await pull('users/')
         if (file) {
-          await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
+          const url = await uploadImage(file)
+          await pushShow(false, path, name, author, description, date, url)
 
           // Updating all the shows in the lists as well
-          Object.entries(users).map(async (entry) =>{
-            const [key, value] = entry
-            const userPath = 'users/' + key + '/list/' + clickedShowId
-            await pushShow(false, userPath, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, await uploadImage(file))
-          })
+          if (users) {
+            Object.entries(users).map(async (entry) =>{
+              const [key, value] = entry
+              const showPath = 'users/' + key + '/list/' + clickedShowId
+              const showData = await pull(showPath)
+              if (showData){
+                await pushShowToList(showPath, name, author, description, date, url, showData.status, showData.rating)
+              }
+            })
+          }
+          
         }
         else{
-          await pushShow(false, path, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
+          await pushShow(false, path, name, author, description, date, clickedShowUrl)
 
           // Updating all the shows in the lists as well
-          Object.entries(users).map(async (entry) =>{
-            const [key, value] = entry
-            const userPath = 'users/' + key + '/list/' + clickedShowId
-            await pushShow(false, userPath, nameRef.current.value, authorRef.current.value, descriptionRef.current.value, dateRef.current.value, clickedShowUrl)
-          })
+          if (users){
+            Object.entries(users).map(async (entry) =>{
+              const [key, value] = entry
+              const showPath = 'users/' + key + '/list/' + clickedShowId
+              const showData = await pull(showPath)
+              if (showData) {
+                await pushShowToList(showPath, name, author, description, date, clickedShowUrl, showData.status, showData.rating)
+              }
+            })
+          }
         }
         
         setLoading(false)
