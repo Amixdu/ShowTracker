@@ -14,7 +14,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
-  const { signup, currentUser } = useAuth()
+  const { signup } = useAuth()
   
   async function handleSubmit(e){
     e.preventDefault()

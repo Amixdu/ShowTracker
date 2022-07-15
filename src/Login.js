@@ -30,7 +30,7 @@ export default function Login() {
     catch(error){
       console.log(error)
       setSuccess(false)
-      setError("Logout Failed")
+      setError("Login Failed")
     }
 
     setLoading(false)
