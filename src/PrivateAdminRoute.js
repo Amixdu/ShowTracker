@@ -12,7 +12,7 @@ export default function PrivateAdminRoute( { component: Component, ...rest }) {
             const path = 'admins/'
             const res = await pull(path)
             setDataFetched(true)
-            setIsAdmin(res.includes(currentUser.uid))      
+            setIsAdmin(res?.includes(currentUser.uid))      
         }
         fetch()
     }, [])

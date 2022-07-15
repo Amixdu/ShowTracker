@@ -1,6 +1,6 @@
 import { Alert } from 'react-bootstrap'
 import React, { useRef, useState } from 'react'
-import { Form, Button, Card } from 'react-bootstrap'
+import { Form, Button, Card, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Loader from './Loader'
 import { useAuth } from './contexts/AuthContext'
@@ -40,54 +40,57 @@ export default function AdminAdd() {
 
 
   return (
-    <div>
+    <div style={{ backgroundColor:'#1569C7' }}>
+      <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh" }}>
+        <div className='w-100' style={{ maxWidth: '400px' }}>
 
-      {loading && <Loader backgCol={'light'}/>}
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Add Shows</h2>
-          {error && <Alert variant='danger'>{error}</Alert>}
-          {success && <Alert> Show Added Successfully </Alert>}
+          {loading && <Loader backgCol={'light'}/>}
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Add Shows</h2>
+              {error && <Alert variant='danger'>{error}</Alert>}
+              {success && <Alert> Show Added Successfully </Alert>}
 
-          <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
 
-            <Form.Group id="name" className='mb-3'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" ref={nameRef} required ></Form.Control>
-            </Form.Group>
+                <Form.Group id="name" className='mb-3'>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" ref={nameRef} required ></Form.Control>
+                </Form.Group>
 
-            <Form.Group id="description" className='mb-3'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3} ref={descriptionRef} required ></Form.Control>
-            </Form.Group>
+                <Form.Group id="description" className='mb-3'>
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={3} ref={descriptionRef} required ></Form.Control>
+                </Form.Group>
 
-            <Form.Group id="author" className='mb-3'>
-              <Form.Label>Author</Form.Label>
-              <Form.Control type="text" ref={authorRef} required ></Form.Control>
-            </Form.Group>
+                <Form.Group id="author" className='mb-3'>
+                  <Form.Label>Author</Form.Label>
+                  <Form.Control type="text" ref={authorRef} required ></Form.Control>
+                </Form.Group>
 
-            <Form.Group id="date" className='mb-3'>
-              <Form.Label>Air Date</Form.Label>
-              <Form.Control type='date' ref={dateRef} required ></Form.Control>
-            </Form.Group>
+                <Form.Group id="date" className='mb-3'>
+                  <Form.Label>Air Date</Form.Label>
+                  <Form.Control type='date' ref={dateRef} required ></Form.Control>
+                </Form.Group>
 
-            <Form.Group id="image" className='mb-4'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control type='file' accept="image/png, image/jpeg" ref={imageRef} required ></Form.Control>
-            </Form.Group>
+                <Form.Group id="image" className='mb-4'>
+                  <Form.Label>Image</Form.Label>
+                  <Form.Control type='file' accept="image/png, image/jpeg" ref={imageRef} required ></Form.Control>
+                </Form.Group>
 
-            <Button disabled={loading} className='w-100' type="submit">
-              Add
-            </Button>
+                <Button disabled={loading} className='w-100' type="submit">
+                  Add
+                </Button>
 
-          </Form>
-        </Card.Body>
-      </Card>
-      
-      <div className="w-100 text-center mt-2" style={{ color:'white' }}>
-        <Link to="/admin" style={{ color:'white' }}> Go Back </Link>
-      </div>
-      
+              </Form>
+            </Card.Body>
+          </Card>
+          
+          <div className="w-100 text-center mt-2" style={{ color:'white' }}>
+            <Link to="/admin" style={{ color:'white' }}> Go Back </Link>
+          </div>
+        </div>
+      </Container>
     </div>
   )
 }
