@@ -23,7 +23,7 @@ export default function UserAdd() {
     const [alreadyInList, setAlreadyInList] = useState([])
     const [reload, setReload] = useState(false)
 
-    const [statusSelect, setStatusSelect] = useState("Watching")
+    const [statusSelect, setStatusSelect] = useState("Plan To Watch")
     const [rateSelect, setRateSelect] = useState("N/A")
     
     const history = useHistory()
@@ -118,7 +118,6 @@ export default function UserAdd() {
                             <Table striped bordered hover variant="dark">
                                 <thead>
                                     <tr>
-                                    {/* <th>Img</th> */}
                                     <th>Name</th>
                                     <th>Creator</th>
                                     <th>Description</th>
@@ -141,11 +140,11 @@ export default function UserAdd() {
                                             {value.name}
                                             </td>
                                             {/* <td></td> */}
-                                            <td width="250">{value.author}</td>
-                                            <td>{value.description}</td>
-                                            <td width="250">{value.date}</td>
+                                            <td width="240">{value.author}</td>
+                                            <td width="350">{value.description}</td>
+                                            <td width="165">{value.date}</td>
                                             <td width="150">
-                                            <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} disabled={exists}>{buttonName}</Button>
+                                            <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} disabled={exists} style={{ margin:'auto', display:'block' }}>{buttonName}</Button>
                                             </td>
                                         </tr>
                                         )
@@ -177,10 +176,9 @@ export default function UserAdd() {
 
                     <Form.Label>How much have you watched?</Form.Label>
                     <Form.Select onChange={(e) => {setStatusSelect(e.target.value)}} aria-label="Default select example" className='mb-3' value={statusSelect}>
-                        {/* <option></option> */}
-                        <option value="Watching">Watching</option>
-                        <option value="Completed">Completed</option>
                         <option value="Plan To Watch">Plan To Watch</option>
+                        <option value="Watching">Watching</option>
+                        <option value="Completed">Completed</option>   
                     </Form.Select>
 
                     <Form.Label>How much would you rate the show?</Form.Label>

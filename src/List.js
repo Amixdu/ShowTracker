@@ -13,6 +13,7 @@ export default function List() {
     const [loading, setLoading] = useState()
     const [showRemoveModal, setShowRemoveModal] = useState()
     const [showUpdateModal, setShowUpdateModal] = useState()
+    const [showDetailsModal, setShowDetailsModal] = useState()
     const [clickedShowId, setClickedShowId] = useState()
     const [clickedShowName, setClickedShowName] = useState()
     const [clickedShowAuthor, setClickedShowAuthor] = useState()
@@ -46,6 +47,27 @@ export default function List() {
         setClickedRating(rating)
         setShowUpdateModal(true)
     }
+
+    const handleDetailsModalClose = () => setShowDetailsModal(false);
+    const handleDetailsModalShow = (name, author, date, description, url) => {
+        setClickedShowName(name)
+        setClickedShowAuthor(author)
+        setClickedShowDate(date)
+        setClickedShowDescription(description)
+        setClickedShowUrl(url)
+        setShowDetailsModal(true)
+    }
+
+    const onMouseEnter = event => {
+        const el = event.target;
+        el.style.color = "	#1E90FF"
+        el.style.cursor = "pointer"
+    };
+      
+    const onMouseLeave = event => {
+        const el = event.target;
+        el.style.color = "white";
+    };
 
     async function handleDelete(e){
         e.preventDefault()
@@ -115,11 +137,7 @@ export default function List() {
                             <Table striped bordered hover variant="dark" >
                                 <thead>
                                     <tr>
-                                    {/* <th>Img</th> */}
                                     <th>Name</th>
-                                    <th>Creator</th>
-                                    <th>Description</th>
-                                    <th>Air Date</th>
                                     <th>Status</th>
                                     <th>Rating</th>
                                     <th></th>
@@ -129,22 +147,20 @@ export default function List() {
                                 <tbody>
                                     {Object.entries(fetchedUserData).map((entry) => {
                                         const [key, value] = entry
-                                        // console.log(value)
                                         return (
                                         <tr key={key}>
-                                            <td width="300">
-                                                <img width="250" height="150" src={value.url} />
+                                            <td width="325">
+                                                <a onMouseEnter={event => onMouseEnter(event)} onMouseLeave={event => onMouseLeave(event)} onClick={() => handleDetailsModalShow(value.name, value.author, value.date, value.description, value.url)} style={{ fontSize:'25px'}}>{value.name}</a>
                                                 <br />
-                                                {value.name}
+                                                <img width="300" height="175" src={value.url} />
+                                                <br />
                                             </td>
-                                            <td width="200">{value.author}</td>
-                                            <td width="300">{value.description}</td>
-                                            <td width="175">{value.date}</td>
+                                           
                                             <td width="200">{value.status}</td>
                                             <td width="200">{value.rating}</td>
                                             <td width="125">
-                                                <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"90%" }} className='mb-2'>Update</Button>
-                                                <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"90%" }} className='mb-2'>Remove</Button>
+                                                <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"75%", margin:'auto', display:'block' }} className='mb-2'>Update</Button>
+                                                <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%", margin:'auto', display:'block' }} className='mb-2'>Remove</Button>
                                             </td>
                                         </tr>
                                         )
@@ -193,7 +209,6 @@ export default function List() {
 
                         <Form.Label>How much have you watched?</Form.Label>
                         <Form.Select onChange={(e) => {setClickedStatus(e.target.value)}} aria-label="Default select example" className='mb-3' value={clickedStatus} >
-                            {/* <option></option> */}
                             <option value="Watching">Watching</option>
                             <option value="Completed">Completed</option>
                             <option value="Plan To Watch">Plan To Watch</option>
@@ -214,6 +229,24 @@ export default function List() {
                         </Button>
 
                     </Form>
+                </Modal.Body>
+            </Modal>
+
+            <Modal show={showDetailsModal} onHide={handleDetailsModalClose}>
+                {loading && <Loader backgCol={'light'}/>}
+                <Modal.Header closeButton>
+                    <Modal.Title style={{ textAlign:"center" }}> {clickedShowName} </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <strong>Creator</strong>
+                    <p>{clickedShowAuthor}</p>
+
+                    <strong>Description</strong>
+                    <p>{clickedShowDescription}</p>
+
+                    <strong>Air Date</strong>
+                    <p>{clickedShowDate}</p>
                 </Modal.Body>
             </Modal>
         </div>
