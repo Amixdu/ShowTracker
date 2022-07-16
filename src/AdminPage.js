@@ -4,7 +4,7 @@ import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Button, Table } from 'react-bootstrap'
 import LoaderMiddle from './LoaderMiddle'
-import { Modal, Form, Alert, Container } from 'react-bootstrap'
+import { Modal, Form, Alert, Container, Card } from 'react-bootstrap'
 import Loader from './Loader'
 
 
@@ -161,10 +161,39 @@ export default function AdminPage() {
           </div>  
 
           <div className='mt-4'>
-            <Table striped bordered hover>
+            {Object.entries(fetchedUserData).map((entry) => {
+              const [key, value] = entry
+              return (
+                  <Card>
+                      <Card.Img variant="top" src={value.url} />
+                      <Card.Body>
+                          <p style={{ fontSize:'35px', display:'inline-block' }}>{value.name}</p>
+                          <Card.Text>
+                          <strong style={{ fontSize:'25px' }}>Creator: </strong>
+                          <p style={{ fontSize:'25px', display:'inline-block' }}>{value.author}</p>
+                          <br />
+
+                          <strong style={{ fontSize:'25px' }}>Description: </strong>
+                          <p style={{ fontSize:'25px', display:'inline-block' }}>{value.description}</p>
+                          <br />
+
+                          <strong style={{ fontSize:'25px' }}>Air Date: </strong>
+                          <p style={{ fontSize:'25px', display:'inline-block' }}>{value.date}</p>
+                          <br />
+
+                      
+                          </Card.Text>
+                          <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"15%", fontSize:'20px', margin:'auto', display:'block' }} className='mb-2'>Update</Button>
+                          {/* <br /> */}
+                          <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"15%", fontSize:'20px', margin:'auto', display:'block' }} className='mb-2'>Remove</Button>
+                      </Card.Body>
+
+                  </Card>
+              )
+            })}
+            {/* <Table striped bordered hover>
               <thead>
                 <tr>
-                  {/* <th>Img</th> */}
                   <th>Name</th>
                   <th>Creator</th>
                   <th>Description</th>
@@ -176,7 +205,7 @@ export default function AdminPage() {
               <tbody>
                 {Object.entries(fetchedUserData).map((entry) => {
                     const [key, value] = entry
-                    // console.log(value)
+                    console.log(value)
                     return (
                       <tr key={key}>
                         <td width="300">
@@ -195,7 +224,7 @@ export default function AdminPage() {
                     )
                 })}
               </tbody>
-            </Table>
+            </Table> */}
           </div> 
         </>
       ) : 

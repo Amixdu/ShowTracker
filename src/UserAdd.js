@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Button, Table } from 'react-bootstrap'
 import LoaderMiddle from './LoaderMiddle'
-import { Modal, Form, Alert, Container } from 'react-bootstrap'
+import { Modal, Form, Alert, Container, Card } from 'react-bootstrap'
 import Loader from './Loader'
 
 
@@ -54,7 +54,7 @@ export default function UserAdd() {
 
         try{
             const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
-            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, statusSelect, statusSelect == "Plan To Watch" ? "N/A" : rateSelect)
+            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, statusSelect, statusSelect === "Plan To Watch" ? "N/A" : rateSelect)
             
             console.log('Added to list')
             setLoading(false)
@@ -83,10 +83,10 @@ export default function UserAdd() {
             const res = await pull(path)
 
             // Saving the ids of already added shows to a list
-            Object.entries(res).map((entry) => {
+            Object.entries(res).forEach((entry) => {
                 const [key, value] = entry
                 setAlreadyInList(prev => {
-                    return [... prev, key]
+                    return [...prev, key]
                 })
             })
         }
@@ -115,7 +115,38 @@ export default function UserAdd() {
                         </div>  
 
                         <div className='mt-4'>
-                            <Table striped bordered hover variant="dark">
+                            {Object.entries(fetchedShowData).map((entry) => {
+                                    const [key, value] = entry
+                                    const exists = alreadyInList.includes(key)
+                                    const buttonName = exists ? "Already Added" : "Add to list"
+                                    return (
+                                        <Card style={{ backgroundColor:'#121212', color:"white" }}>
+                                            <Card.Img variant="top" src={value.url} />
+                                            <Card.Body>
+                                                <p style={{ fontSize:'35px', display:'inline-block' }}>{value.name}</p>
+                                                <Card.Text>
+                                                <strong style={{ fontSize:'25px' }}>Creator: </strong>
+                                                <p style={{ fontSize:'25px', display:'inline-block' }}>{value.author}</p>
+                                                <br />
+
+                                                <strong style={{ fontSize:'25px' }}>Description: </strong>
+                                                <p style={{ fontSize:'25px', display:'inline-block' }}>{value.description}</p>
+                                                <br />
+
+                                                <strong style={{ fontSize:'25px' }}>Air Date: </strong>
+                                                <p style={{ fontSize:'25px', display:'inline-block' }}>{value.date}</p>
+                                                <br />
+
+                                            
+                                                </Card.Text>
+                                                <Button onClick={() => handleShow(key, value.name, value.author, value.date, value.description, value.url)} disabled={exists} style={{ margin:'auto', display:'block', fontSize:'25px' }}>{buttonName}</Button>
+                                                <br />
+                                            </Card.Body>
+
+                                        </Card>
+                                    )
+                            })}
+                            {/* <Table striped bordered hover variant="dark">
                                 <thead>
                                     <tr>
                                     <th>Name</th>
@@ -133,13 +164,12 @@ export default function UserAdd() {
                                         const exists = alreadyInList.includes(key)
                                         const buttonName = exists ? "Already Added" : "Add to list"
                                         return (
-                                        <tr key={key}>
-                                            <td width="300">
+                                        <tr key={key}> */}
+                                            {/* <td width="300">
                                             <img width="250" height="150" src={value.url} />
                                             <br />
                                             {value.name}
                                             </td>
-                                            {/* <td></td> */}
                                             <td width="240">{value.author}</td>
                                             <td width="350">{value.description}</td>
                                             <td width="165">{value.date}</td>
@@ -150,7 +180,7 @@ export default function UserAdd() {
                                         )
                                     })}
                                 </tbody>
-                            </Table>
+                            </Table> */}
                         </div> 
                     </div>
                 ) 

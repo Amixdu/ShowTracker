@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import "./AdminPage.css"
 import { useAuth } from './contexts/AuthContext'
 import { Button, Table } from 'react-bootstrap'
 import LoaderMiddle from './LoaderMiddle'
-import { Modal, Form, Alert, Container } from 'react-bootstrap'
+import { Modal, Form, Alert, Container, Card } from 'react-bootstrap'
 import Loader from './Loader'
 
 
@@ -92,7 +92,7 @@ export default function List() {
         setLoading(true)
         try{
             const path = 'users/' + currentUser.uid + '/list/' + clickedShowId
-            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, clickedStatus, clickedStatus == "Plan To Watch" ? "N/A" : clickedRating)
+            await pushShowToList(path, clickedShowName, clickedShowAuthor, clickedShowDescription, clickedShowDate, clickedShowUrl, clickedStatus, clickedStatus === "Plan To Watch" ? "N/A" : clickedRating)
             setLoading(false)
             setShowUpdateModal(false)
             setReload(!reload)
@@ -123,18 +123,48 @@ export default function List() {
                     <div style={{ backgroundColor:'#121212', overflow:'auto' }}>
                         <div className='box'>
                             <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif", color:"white" }}>My List</h2>
-                            {/* <div className='buttonRight'> */}
                                 <Button onClick={() => history.goBack()}>Go Back</Button>
                                 {'  '}
                                 <Link to="/home" className='btn btn-primary'>Home</Link>
                                 {'  '}
                                 <Link to="/browse-shows" className='btn btn-primary'>Add Shows to List</Link>
-                                
-                            {/* </div> */}
                         </div>  
 
                         <div className='mt-4'>
-                            <Table striped bordered hover variant="dark" >
+
+                            {Object.entries(fetchedUserData).map((entry) => {
+                                const [key, value] = entry
+                                return (
+                                    <>
+                                    <Card style={{ backgroundColor:'#121212', color:"white" }}>
+                                        <Card.Img variant="top" src={value.url} />
+                                        <Card.Body>
+                                            <p style={{ fontSize:'35px', display:'inline-block' }} onMouseEnter={event => onMouseEnter(event)} onMouseLeave={event => onMouseLeave(event)} onClick={() => handleDetailsModalShow(value.name, value.author, value.date, value.description, value.url)}>{value.name}</p>
+                                            <Card.Text>
+                                            <strong style={{ fontSize:'25px' }}>Status: </strong>
+                                            <p style={{ fontSize:'25px', display:'inline-block', margin:'0' }}>{value.status}</p>
+                                            <br />
+
+                                            <strong style={{ fontSize:'25px' }}>Rating: </strong>
+                                            <p style={{ fontSize:'25px', display:'inline-block', margin:'0' }}>{value.rating}</p>
+
+                                            {/* <strong>Air Date</strong>
+                                            <p>{value.date}</p> */}
+                                            </Card.Text>
+                                            <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"15%", fontSize:'20px' }} className='mb-2'>Update</Button>
+                                            <br />
+                                            <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"15%", fontSize:'20px' }} className='mb-2'>Remove</Button>
+                                            <br />
+                                        </Card.Body>
+                                    </Card>
+                                    <br />
+                                    <br />
+                                    </>
+                                )
+                            })}
+
+
+                            {/* <Table striped bordered hover variant="dark" >
                                 <thead>
                                     <tr>
                                     <th>Name</th>
@@ -166,7 +196,7 @@ export default function List() {
                                         )
                                     })}
                                 </tbody>
-                            </Table>
+                            </Table> */}
                         </div>
                     </div>
                 ) 
