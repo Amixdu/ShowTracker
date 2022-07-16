@@ -180,7 +180,7 @@ export default function AdminPage() {
                     return (
                       <tr key={key}>
                         <td width="300">
-                          <img width="200" height="150" src={value.url} />
+                          <img width="250" height="150" src={value.url} />
                           <br />
                           {value.name}
                         </td>
