@@ -183,9 +183,9 @@ export default function AdminPage() {
 
                       
                           </Card.Text>
-                          <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"15%", fontSize:'20px', margin:'auto', display:'block' }} className='mb-2'>Update</Button>
+                          <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"200px", fontSize:'20px', margin:'auto', display:'block' }} className='mb-2'>Update</Button>
                           {/* <br /> */}
-                          <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"15%", fontSize:'20px', margin:'auto', display:'block' }} className='mb-2'>Remove</Button>
+                          <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"200px", fontSize:'20px', margin:'auto', display:'block' }} className='mb-2'>Remove</Button>
                       </Card.Body>
 
                   </Card>

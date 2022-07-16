@@ -151,9 +151,9 @@ export default function List() {
                                             {/* <strong>Air Date</strong>
                                             <p>{value.date}</p> */}
                                             </Card.Text>
-                                            <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"15%", fontSize:'20px' }} className='mb-2'>Update</Button>
+                                            <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"200px", fontSize:'20px' }} className='mb-2'>Update</Button>
                                             <br />
-                                            <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"15%", fontSize:'20px' }} className='mb-2'>Remove</Button>
+                                            <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"200px", fontSize:'20px' }} className='mb-2'>Remove</Button>
                                             <br />
                                         </Card.Body>
                                     </Card>
