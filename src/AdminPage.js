@@ -153,11 +153,11 @@ export default function AdminPage() {
         <>
           <div className='box'>
               <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif" }}>All Shows (Admin Access)</h2>
-              <div className='buttonRight'>
+              {/* <div className='buttonRight'> */}
                   <Link to="/home" className='btn btn-primary'>Go Back</Link>
                   {'  '}
                   <Link to="/admin-add" className='btn btn-primary'>Add Shows</Link>
-              </div>
+              {/* </div> */}
           </div>  
 
           <div className='mt-4'>

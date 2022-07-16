@@ -105,13 +105,13 @@ export default function UserAdd() {
                     <div style={{ backgroundColor:'#121212', overflow:'auto' }}>
                         <div className='box'>
                             <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif", color:"white" }}>All Shows</h2>
-                            <div className='buttonRight'>
+                            {/* <div className='buttonRight'> */}
                                 <Button onClick={() => history.goBack()}>Go Back</Button>
                                 {'  '}
                                 <Link to="/home" className='btn btn-primary'>Home</Link>
                                 {'  '}
                                 <Link to="/list" className='btn btn-primary'>My List</Link>
-                            </div>
+                            {/* </div> */}
                         </div>  
 
                         <div className='mt-4'>
