@@ -121,21 +121,19 @@ export default function List() {
             {fetchedUserData ? 
                 (fetchedUserData !== 'Empty' ? (
                     <div style={{ backgroundColor:'#121212', overflow:'auto' }}>
-                        
+                        <div className='box'>
+                            <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif", color:"white" }}>My List</h2>
+                            {/* <div className='buttonRight'> */}
+                                <Button onClick={() => history.goBack()}>Go Back</Button>
+                                {'  '}
+                                <Link to="/home" className='btn btn-primary'>Home</Link>
+                                {'  '}
+                                <Link to="/browse-shows" className='btn btn-primary'>Add Shows to List</Link>
+                                
+                            {/* </div> */}
+                        </div>  
 
                         <div className='mt-4'>
-                        <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh" }}>
-                            <div className='w-100' style={{ maxWidth: '800px' }}>
-                            
-                            <div className='box mb-4'>
-                                <h2 style={{ fontSize:'40px', fontWeight:"bold", fontFamily:"Georgia, serif", color:"white" }}>My List</h2>
-                                    <Button onClick={() => history.goBack()}>Go Back</Button>
-                                    {'  '}
-                                    <Link to="/home" className='btn btn-primary'>Home</Link>
-                                    {'  '}
-                                    <Link to="/browse-shows" className='btn btn-primary'>Add Shows to List</Link>  
-                            </div>  
-
                             <Table striped bordered hover variant="dark" >
                                 <thead>
                                     <tr>
@@ -151,16 +149,16 @@ export default function List() {
                                         const [key, value] = entry
                                         return (
                                         <tr key={key}>
-                                            <td width="43%">
+                                            <td width="325">
                                                 <a onMouseEnter={event => onMouseEnter(event)} onMouseLeave={event => onMouseLeave(event)} onClick={() => handleDetailsModalShow(value.name, value.author, value.date, value.description, value.url)} style={{ fontSize:'25px'}}>{value.name}</a>
                                                 <br />
-                                                <img width="95%" height="175" src={value.url} onClick={() => handleDetailsModalShow(value.name, value.author, value.date, value.description, value.url)}/>
+                                                <img width="300" height="175" src={value.url} />
                                                 <br />
                                             </td>
                                            
-                                            <td width="20%">{value.status}</td>
-                                            <td width="17$">{value.rating}</td>
-                                            <td width="20%">
+                                            <td width="200">{value.status}</td>
+                                            <td width="200">{value.rating}</td>
+                                            <td width="125">
                                                 <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url, value.status, value.rating)} style={{ width:"75%", margin:'auto', display:'block' }} className='mb-2'>Update</Button>
                                                 <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%", margin:'auto', display:'block' }} className='mb-2'>Remove</Button>
                                             </td>
@@ -169,8 +167,6 @@ export default function List() {
                                     })}
                                 </tbody>
                             </Table>
-                            </div>
-                        </Container>
                         </div>
                     </div>
                 ) 
