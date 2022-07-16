@@ -180,13 +180,13 @@ export default function AdminPage() {
                     return (
                       <tr key={key}>
                         <td width="300">
-                          <img width="250" height="150" src={value.url} />
+                          <img width="200" height="150" src={value.url} />
                           <br />
                           {value.name}
                         </td>
-                        <td width="250">{value.author}</td>
-                        <td>{value.description}</td>
-                        <td width="250">{value.date}</td>
+                        <td width="240">{value.author}</td>
+                        <td width="350">{value.description}</td>
+                        <td width="165">{value.date}</td>
                         <td width="150">
                           <Button onClick={() => handleUpdateModalShow(key, value.name, value.author, value.date, value.description, value.url)} style={{ width:"75%" }} className='mb-2'>Update</Button>
                           <Button onClick={() => handleRemoveModalShow(key)} variant='danger' style={{ width:"75%" }} className='mb-2'>Remove</Button>
