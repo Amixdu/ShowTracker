@@ -4,7 +4,7 @@ import Spinner from 'react-bootstrap/Spinner';
 export default function LoaderMiddle( {col }) {
     return (
         <>
-            <Spinner animation="grow" variant={col} style={{ margin:'0', position:'absolute', top:'50%', left:'50%', msTransform:'translate(-50%, -50%)', width: "5rem", height: "5rem" }}/>;
+            <Spinner animation="grow" variant={col} style={{ position:'absolute', top: "0", left: "0", bottom:"0", right:"0", margin:'auto' }}/>;
         </>
     )
 }

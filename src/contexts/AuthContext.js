@@ -14,8 +14,6 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
-  const [pulledData, setPulledData] = useState()
-  const [downloadUrl, setDownloadUrl] = useState()
   
   async function signup(email, password){
     await createUserWithEmailAndPassword(auth, email, password)
